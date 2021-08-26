@@ -1,6 +1,5 @@
 import geopandas
 import json
-import sys
 import logging
 from configuration import config
 

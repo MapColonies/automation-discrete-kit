@@ -1,2 +1,2 @@
 # automation-discrete-kit
-This package provide multiple utilities for discrete manipulations and validation tools
+This package provides multiple utilities for discrete manipulations and validation tools

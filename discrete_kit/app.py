@@ -35,7 +35,6 @@ class CreateJsonShape:
             if config.validate_ext_files_exists(full_file_path):
                 self.read_shapes[name] = shp_to_geojson(full_file_path)
         self.created_json = self.make_full_json()
-        print('.....JSON Created.....')
 
     # ToDo: Finish to create JSON - originDirectory.
     def make_full_json(self):
@@ -113,4 +112,4 @@ class CreateJsonShape:
 # ToDo: Check what is the relevant path for the shape folder -> 2 files shapes and tiff
 if __name__ == '__main__':
     shape_json = CreateJsonShape(r'D:\raster\shapes\1')
-    print(shape_json.get_json_output())
+    # print(shape_json.get_json_output())

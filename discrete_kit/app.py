@@ -7,6 +7,11 @@ _log = logging.getLogger('discrete_kit.app')
 
 
 def shp_to_geojson(path):
+    """
+    This function reads shp files.
+    :param path: path to to file with suffix shp
+    :return: JSON string.
+    """
     try:
         shp_file = geopandas.read_file(path + '.shp')
         geo_json = shp_file._to_geo()
@@ -17,11 +22,11 @@ def shp_to_geojson(path):
 
 
 class CreateJsonShape:
-    def __init__(self, path):
-        self.path = path
+    def __init__(self, folder_path):
+        self.path = folder_path
         # paths = glob(path + '/*/')  # ToDo: Find the path
-        self.shapes_path = path
-        self.tiff_path = path
+        self.shapes_path = folder_path
+        self.tiff_path = folder_path
         self.read_shapes = {}
         self.shapes_path += '\\' + 'Shapes' + '\\'
         files_names = ['Files', 'Product', 'ShapeMetadata']
@@ -29,16 +34,34 @@ class CreateJsonShape:
             full_file_path = self.shapes_path + name
             if config.validate_ext_files_exists(full_file_path):
                 self.read_shapes[name] = shp_to_geojson(full_file_path)
-        temp_json = self.make_full_json()
+        self.created_json = self.make_full_json()
         print('.....JSON Created.....')
 
     # ToDo: Finish to create JSON - originDirectory.
     def make_full_json(self):
+        """
+        The function creating full JSON with , Filenames + metadata + layPolygonParts JSON.
+        :return: full JSON string.
+        """
         full_json_str = {'fileNames': self.find_filenames(), 'metadata': self.create_metadata(),
-                         'layerPolygonParts': self.read_shapes['Files'], 'originDirectory': 'fill it'}
-        return json.dumps(full_json_str)
+                         'layerPolygonParts': self.read_shapes['ShapeMetadata'], 'originDirectory': 'fill it'}
+        # return json.dumps(full_json_str)
+        return full_json_str
+
+    def get_json_output(self):
+        """
+        This function encodes the full json with uft8 to be able show hebrew.
+        :return: decoded json as string.
+        """
+        data = json.dumps(self.created_json, ensure_ascii=False).encode('utf8')
+        decoded_data = data.decode()
+        return decoded_data
 
     def find_filenames(self):
+        """
+        This function find file names in "Files.shp" and appending tiff suffix to it and return a list of filenames.
+        :return: Tiff file names.
+        """
         filenames_list = []
         try:
             shapes = self.read_shapes['Files']['features']
@@ -50,6 +73,10 @@ class CreateJsonShape:
         return filenames_list
 
     def create_metadata(self):
+        """
+        This function reads the metadata from ShapeMetadata and fills all the keys with the relevant values.
+        :return: metadata JSON string.
+        """
         # ToDo : Add / Check creationDate, ingestionDate, updateDate, sourceDateStart, sourceDateEnd
         try:
             metadata = {'type': config.metadata_type,
@@ -82,6 +109,8 @@ class CreateJsonShape:
         return metadata
 
 
-# ToDo: Check what should i do with the returned JSON
-# ToDo: Check what is the relevant path for the shape folder
-c = CreateJsonShape(r'D:\raster\shapes\arzi_mz')
+# ToDo: Check what should i do with the returned JSON -> Return to Ronen data.decode() (JSON)
+# ToDo: Check what is the relevant path for the shape folder -> 2 files shapes and tiff
+if __name__ == '__main__':
+    shape_json = CreateJsonShape(r'D:\raster\shapes\1')
+    print(shape_json.get_json_output())

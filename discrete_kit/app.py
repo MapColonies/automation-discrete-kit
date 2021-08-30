@@ -3,6 +3,8 @@ import json
 import logging
 from configuration import config
 
+# import glob as glob
+
 _log = logging.getLogger('discrete_kit.app')
 
 
@@ -24,7 +26,7 @@ def shp_to_geojson(path):
 class CreateJsonShape:
     def __init__(self, folder_path):
         self.path = folder_path
-        # paths = glob(path + '/*/')  # ToDo: Find the path
+        # paths = glob(self.path + '/*/')  # ToDo: Find the path
         self.shapes_path = folder_path
         self.tiff_path = folder_path
         self.read_shapes = {}
@@ -36,6 +38,11 @@ class CreateJsonShape:
                 self.read_shapes[name] = shp_to_geojson(full_file_path)
         self.created_json = self.make_full_json()
 
+    def create_origin_dir(self):
+        path_list = self.path.split('\\')[-2:]
+        str_origin_dir = str(path_list[0]) + r'/' + str(path_list[1])
+        return str_origin_dir
+
     # ToDo: Finish to create JSON - originDirectory.
     def make_full_json(self):
         """
@@ -43,7 +50,7 @@ class CreateJsonShape:
         :return: full JSON string.
         """
         full_json_str = {'fileNames': self.find_filenames(), 'metadata': self.create_metadata(),
-                         'originDirectory': 'fill it'}
+                         'originDirectory': self.create_origin_dir()}
         # return json.dumps(full_json_str)
         return full_json_str
 

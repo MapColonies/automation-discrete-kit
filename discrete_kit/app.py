@@ -43,7 +43,7 @@ class CreateJsonShape:
         :return: full JSON string.
         """
         full_json_str = {'fileNames': self.find_filenames(), 'metadata': self.create_metadata(),
-                         'layerPolygonParts': self.read_shapes['ShapeMetadata'], 'originDirectory': 'fill it'}
+                         'originDirectory': 'fill it'}
         # return json.dumps(full_json_str)
         return full_json_str
 
@@ -102,14 +102,15 @@ class CreateJsonShape:
                         'footprint': {'type': self.read_shapes['Product']['features'][0]['geometry']['type'],
                                       'coordinates': [[list(x) for x in
                                                        self.read_shapes['Product']['features'][0]['geometry'][
-                                                           'coordinates'][0]]]}}
+                                                           'coordinates'][0]]]},
+                        'layerPolygonParts': self.read_shapes['ShapeMetadata']}
         except KeyError:
             raise Exception("Key not found in the ShapeMetadata")
         return metadata
 
 
 # ToDo: Check what should i do with the returned JSON -> Return to Ronen data.decode() (JSON)
-# ToDo: Check what is the relevant path for the shape folder -> 2 files shapes and tiff
+# ToDo: Check what is the relevant path for the shape folder -> 2 files shapes and tiff : example : D:\raster\shapes\arzi_mz
 if __name__ == '__main__':
     shape_json = CreateJsonShape(r'D:\raster\shapes\1')
-    # print(shape_json.get_json_output())
+    print(shape_json.get_json_output())

@@ -3,8 +3,6 @@ import json
 import logging
 from configuration import config
 
-# import glob as glob
-
 _log = logging.getLogger('discrete_kit.app')
 
 
@@ -26,7 +24,6 @@ def shp_to_geojson(path):
 class CreateJsonShape:
     def __init__(self, folder_path):
         self.path = folder_path
-        # paths = glob(self.path + '/*/')  # ToDo: Find the path
         self.shapes_path = folder_path
         self.tiff_path = folder_path
         self.read_shapes = {}
@@ -38,7 +35,14 @@ class CreateJsonShape:
                 self.read_shapes[name] = shp_to_geojson(full_file_path)
         self.created_json = self.make_full_json()
 
+    def __call__(self, *args, **kwargs):
+        return self.get_json_output()
+
     def create_origin_dir(self):
+        """
+        Function cuts the folder path and slices the last 2 names as required.
+        :return: last 2 folders from the given path as string.
+        """
         path_list = self.path.split('\\')[-2:]
         str_origin_dir = str(path_list[0]) + r'/' + str(path_list[1])
         return str_origin_dir
@@ -115,9 +119,7 @@ class CreateJsonShape:
             raise Exception("Key not found in the ShapeMetadata")
         return metadata
 
-
 # ToDo: Check what should i do with the returned JSON -> Return to Ronen data.decode() (JSON)
 # ToDo: Check what is the relevant path for the shape folder -> 2 files shapes and tiff : example : D:\raster\shapes\arzi_mz
-if __name__ == '__main__':
-    shape_json = CreateJsonShape(r'D:\raster\shapes\1')
-    print(shape_json.get_json_output())
+# if __name__ == '__main__':
+#     print(CreateJsonShape().get_json_output(r'D:\raster\shapes\1'))

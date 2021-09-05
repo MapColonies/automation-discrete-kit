@@ -56,7 +56,6 @@ class CreateJsonShape:
         full_json_str = {'fileNames': self.find_filenames(), 'metadata': self.create_metadata(),
                          'originDirectory': self.create_origin_dir()}
         # return json.dumps(full_json_str)
-        print(full_json_str)
         return full_json_str
 
     def get_json_output(self):
@@ -69,8 +68,12 @@ class CreateJsonShape:
         return decoded_data
 
     def bounding_box(self, points):
+        """
+        The function calculates bounding_box from the coordinates. XY - Min , XY - Max
+        :param points: coordinates list
+        :return: List of bounding box.
+        """
         x_coordinates, y_coordinates = zip(*points)
-
         return [(min(x_coordinates), min(y_coordinates)), (max(x_coordinates), max(y_coordinates))]
 
     def find_filenames(self):
@@ -128,19 +131,12 @@ class CreateJsonShape:
             for index in bbox_list:
                 for tup_index in index:
                     bbox_to_append.append(tup_index)
-
             metadata['layerPolygonParts']['bbox'] = bbox_to_append
-            # x =
-            # d = self.bounding_box(x)
-            print(metadata)
         except KeyError:
             raise Exception("Key not found in the ShapeMetadata")
         return metadata
 
 
-# ToDo: Check what should i do with the returned JSON -> Return to Ronen data.decode() (JSON)
-# ToDo: Check what is the relevant path for the shape folder -> 2 files shapes and tiff : example : D:\raster\shapes\arzi_mz
 if __name__ == '__main__':
-    # print(CreateJsonShape().get_json_output(r'D:\raster\shapes\1'))
     c = CreateJsonShape(r'D:\raster\shapes\1')
-    print(c.get_json_output())
+    c.get_json_output()

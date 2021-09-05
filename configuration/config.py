@@ -4,7 +4,7 @@ import datetime
 
 files_extension_list = ['.cpg', '.dbf', '.prj', '.shp', '.shx']
 
-metadata_type = 'RECORD_RASTER'
+METADATA_TYPE = 'RECORD_RASTER'
 
 
 def validate_ext_files_exists(path):
@@ -25,4 +25,4 @@ def get_folder_names(path):
 
 def convert_time_to_utc(received_time):
     return datetime.datetime.strptime(received_time,
-                                      '%d/%m/%Y').strftime('%Y-%d-%mT%H:%M:%S:%fZ')
+                                      '%d/%m/%Y').strftime('%Y-%d-%mT%H:%M:%S.%f')[:-3] + 'Z'

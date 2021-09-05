@@ -36,7 +36,7 @@ class CreateJsonShape:
         self.created_json = self.make_full_json()
 
     def __call__(self, *args, **kwargs):
-        return self.get_json_output()
+        return self.make_full_json()
 
     def create_origin_dir(self):
         """
@@ -56,6 +56,7 @@ class CreateJsonShape:
         full_json_str = {'fileNames': self.find_filenames(), 'metadata': self.create_metadata(),
                          'originDirectory': self.create_origin_dir()}
         # return json.dumps(full_json_str)
+        print(full_json_str)
         return full_json_str
 
     def get_json_output(self):
@@ -66,6 +67,11 @@ class CreateJsonShape:
         data = json.dumps(self.created_json, ensure_ascii=False).encode('utf8')
         decoded_data = data.decode()
         return decoded_data
+
+    def bounding_box(self, points):
+        x_coordinates, y_coordinates = zip(*points)
+
+        return [(min(x_coordinates), min(y_coordinates)), (max(x_coordinates), max(y_coordinates))]
 
     def find_filenames(self):
         """
@@ -89,7 +95,7 @@ class CreateJsonShape:
         """
         # ToDo : Add / Check creationDate, ingestionDate, updateDate, sourceDateStart, sourceDateEnd
         try:
-            metadata = {'type': config.metadata_type,
+            metadata = {'type': config.METADATA_TYPE,
                         'productName': self.read_shapes['ShapeMetadata']['features'][0]['properties']['SourceName'],
                         'description': self.read_shapes['ShapeMetadata']['features'][0]['properties']['Dsc'],
                         'creationDate': config.convert_time_to_utc(
@@ -115,11 +121,26 @@ class CreateJsonShape:
                                                        self.read_shapes['Product']['features'][0]['geometry'][
                                                            'coordinates'][0]]]},
                         'layerPolygonParts': self.read_shapes['ShapeMetadata']}
+            bbox_list = self.bounding_box(
+                [list(x) for x in self.read_shapes['Product']['features'][0]['geometry']['coordinates'][0]])
+            del metadata['layerPolygonParts']['features'][0]['id']
+            bbox_to_append = []
+            for index in bbox_list:
+                for tup_index in index:
+                    bbox_to_append.append(tup_index)
+
+            metadata['layerPolygonParts']['bbox'] = bbox_to_append
+            # x =
+            # d = self.bounding_box(x)
+            print(metadata)
         except KeyError:
             raise Exception("Key not found in the ShapeMetadata")
         return metadata
 
+
 # ToDo: Check what should i do with the returned JSON -> Return to Ronen data.decode() (JSON)
 # ToDo: Check what is the relevant path for the shape folder -> 2 files shapes and tiff : example : D:\raster\shapes\arzi_mz
-# if __name__ == '__main__':
-#     print(CreateJsonShape().get_json_output(r'D:\raster\shapes\1'))
+if __name__ == '__main__':
+    # print(CreateJsonShape().get_json_output(r'D:\raster\shapes\1'))
+    c = CreateJsonShape(r'D:\raster\shapes\1')
+    print(c.get_json_output())

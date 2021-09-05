@@ -6,3 +6,6 @@ Include:
 ## Test suite include following tests:
 1. CreateJsonShape - creates JSON from read files to be compared later on.
 2. Config - contains file extensions , and useful function for the JSON creation.
+
+## Returns 
+ * JSON - contains relevant fields filled with values.

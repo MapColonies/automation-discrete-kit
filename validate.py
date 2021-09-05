@@ -1,5 +1,6 @@
 import json
 from unittest import *
+
 # temp_json = dict_to_compare['search'][0]
 
 '''
@@ -46,6 +47,6 @@ from discrete_kit.app import *
 c = CreateJsonShape(r'D:\raster\shapes\1')
 jj = json.loads(c.get_json_output())
 print(c.get_json_output())
-assert jj['metadata']['sourceDateEnd'] == temp_json['sourceDateEnd']
+# assert jj['metadata']['sourceDateEnd'] == temp_json['sourceDateEnd']
 
 print("0")

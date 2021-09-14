@@ -1,6 +1,11 @@
-import geopandas
 import json
 import logging
+import os
+
+import geopandas
+from pathlib import Path
+from validator import schema_validator
+from validator import json_compare_pycsw
 from configuration import config
 
 _log = logging.getLogger('discrete_kit.app')
@@ -47,7 +52,6 @@ class CreateJsonShape:
         str_origin_dir = str(path_list[0]) + r'/' + str(path_list[1])
         return str_origin_dir
 
-    # ToDo: Finish to create JSON - originDirectory.
     def make_full_json(self):
         """
         The function creating full JSON with , Filenames + metadata + layPolygonParts JSON.
@@ -139,4 +143,10 @@ class CreateJsonShape:
 
 if __name__ == '__main__':
     c = CreateJsonShape(r'D:\raster\shapes\1')
-    c.get_json_output()
+    try:
+        with open(Path(Path(__file__).resolve()).parent.parent / 'jsons/shape_file.json', 'w', encoding='utf-8') as f:
+            json.dump(json.loads(c.get_json_output()), f, ensure_ascii=False)
+    except IOError:
+        raise Exception("Cannot write json file")
+    schema_validator.validate_json(c.get_json_output())
+    # json_compare_pycsw()

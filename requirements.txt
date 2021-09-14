@@ -3,3 +3,6 @@ wheel
 geopandas
 Fiona
 GDAL
+os
+json
+jsonschema

@@ -1,0 +1,165 @@
+{
+  "type": "object",
+  "required": [],
+  "properties": {
+    "fileNames": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "required": [],
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "productName": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "creationDate": {
+          "type": "string"
+        },
+        "ingestionDate": {
+          "type": "string"
+        },
+        "updateDate": {
+          "type": "string"
+        },
+        "sourceDateStart": {
+          "type": "string"
+        },
+        "sourceDateEnd": {
+          "type": "string"
+        },
+        "accuracyCE90": {
+          "type": "number"
+        },
+        "sensorType": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "productId": {
+          "type": "string"
+        },
+        "productVersion": {
+          "type": "string"
+        },
+        "productType": {
+          "type": "string"
+        },
+        "resolution": {
+          "type": "number"
+        },
+        "footprint": {
+          "type": "object",
+          "required": [],
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "coordinates": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "layerPolygonParts": {
+          "type": "object",
+          "required": [],
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "features": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [],
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "properties": {
+                    "type": "object",
+                    "required": [],
+                    "properties": {
+                      "Dsc": {
+                        "type": "string"
+                      },
+                      "Ep90": {
+                        "type": "string"
+                      },
+                      "Resolution": {
+                        "type": "string"
+                      },
+                      "Rms": {
+                        "type": "null"
+                      },
+                      "Scale": {
+                        "type": "null"
+                      },
+                      "SensorType": {
+                        "type": "string"
+                      },
+                      "Source": {
+                        "type": "string"
+                      },
+                      "SourceName": {
+                        "type": "string"
+                      },
+                      "UpdateDate": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "geometry": {
+                    "type": "object",
+                    "required": [],
+                    "properties": {
+                      "type": {
+                        "type": "string"
+                      },
+                      "coordinates": {
+                        "type": "array",
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "type": "array",
+                            "items": {
+                              "type": "number"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "originDirectory": {
+      "type": "string"
+    }
+  }
+}

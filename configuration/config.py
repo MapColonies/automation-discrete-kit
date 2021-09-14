@@ -5,7 +5,8 @@ import datetime
 files_extension_list = ['.cpg', '.dbf', '.prj', '.shp', '.shx']
 
 METADATA_TYPE = 'RECORD_RASTER'
-
+JSON_NAME = "metadata_schema.json"
+SCHEMA_FOLDER = 'schema'
 
 def validate_ext_files_exists(path):
     for ext in files_extension_list:

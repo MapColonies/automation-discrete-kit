@@ -6,7 +6,7 @@ from jsonschema import *
 import configuration.config
 
 
-def validate_json(received_json=None):
+def validate_json_types(received_json=None):
     if received_json:
         if type(json.loads(received_json)) is dict:
             dir_name = os.path.dirname(__file__)

@@ -100,10 +100,15 @@ class CreateJsonShape:
         This function reads the metadata from ShapeMetadata and fills all the keys with the relevant values.
         :return: metadata JSON string.
         """
-        # ToDo : Add / Check creationDate, ingestionDate, updateDate, sourceDateStart, sourceDateEnd
+
+        # ToDo : Add / Check creationDate, ingestionDate, updateDate, sourceDateStart, sourceDateEnd , Add New Cities + Countries
+        ### self.read_shapes['ShapeMetadata']['features'][0]['properties']['Cities']
+        ### self.read_shapes['ShapeMetadata']['features'][0]['properties']['Countries']
         try:
             metadata = {'type': config.METADATA_TYPE,
                         'productName': self.read_shapes['ShapeMetadata']['features'][0]['properties']['SourceName'],
+                        'Cities': self.read_shapes['ShapeMetadata']['features'][0]['properties']['Cities'],
+                        'Countries': self.read_shapes['ShapeMetadata']['features'][0]['properties']['Countries'],
                         'description': self.read_shapes['ShapeMetadata']['features'][0]['properties']['Dsc'],
                         'creationDate': config.convert_time_to_utc(
                             self.read_shapes['ShapeMetadata']['features'][0]['properties']['UpdateDate']),
@@ -141,12 +146,16 @@ class CreateJsonShape:
         return metadata
 
 
+"""
+This is an example of creating json from shape file.
+"""
 if __name__ == '__main__':
-    c = CreateJsonShape(r'D:\raster\shapes\1')
+    c = CreateJsonShape(r'D:\example-shapefiles')  # Created with None
+    print(c.get_json_output())
     try:
         with open(Path(Path(__file__).resolve()).parent.parent / 'jsons/shape_file.json', 'w', encoding='utf-8') as f:
             json.dump(json.loads(c.get_json_output()), f, ensure_ascii=False)
     except IOError:
         raise Exception("Cannot write json file")
-    schema_validator.validate_json(c.get_json_output())
+    schema_validator.validate_json_types(c.get_json_output())
     # json_compare_pycsw()

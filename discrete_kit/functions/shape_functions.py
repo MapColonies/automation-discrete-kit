@@ -28,14 +28,6 @@ class CreateJsonShape:
         self.shapes_path = folder_path
         self.tiff_path = folder_path
         self.read_shapes = {}
-        # if os.uname().sysname == 'Linux':
-        #     self.shapes_path += '/'
-        # else:
-        #     self.shapes_path += '\\'
-        # if os.uname().sysname == 'Linux':
-        #     self.shapes_path += '/' + 'Shapes' + '/'
-        # else:
-        #     self.shapes_path += '\\' + 'Shapes' + '\\'
         files_names = ['Files', 'Product', 'ShapeMetadata']
         for name in files_names:
             full_file_path = os.path.join(self.shapes_path, name)

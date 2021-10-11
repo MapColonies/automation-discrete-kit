@@ -1,17 +1,13 @@
-import json
-import logging
-import os
-
 import geopandas
-from pathlib import Path
-from validator import schema_validator
-from validator import json_compare_pycsw
-from configuration import config
+import logging
+from discrete_kit.configuration import config
+import os
+import json
 
-_log = logging.getLogger('discrete_kit.app')
+_log = logging.getLogger('discrete_kit.shape_functions')
 
 
-def shp_to_geojson(path):
+def shape_to_geojson(path):
     """
     This function reads shp files.
     :param path: path to to file with suffix shp
@@ -32,25 +28,54 @@ class CreateJsonShape:
         self.shapes_path = folder_path
         self.tiff_path = folder_path
         self.read_shapes = {}
-        self.shapes_path += '\\' + 'Shapes' + '\\'
+        if os.uname().sysname == 'Linux':
+            self.shapes_path += '/' + 'Shapes' + '/'
+        else:
+            self.shapes_path += '\\' + 'Shapes' + '\\'
         files_names = ['Files', 'Product', 'ShapeMetadata']
         for name in files_names:
             full_file_path = self.shapes_path + name
             if config.validate_ext_files_exists(full_file_path):
-                self.read_shapes[name] = shp_to_geojson(full_file_path)
+                self.read_shapes[name] = shape_to_geojson(full_file_path)
+        current_time_str = config.generate_datatime_zulu().replace('-', '_').replace(':', '_')
+        # self.add_ext_source_name(full_file_path + '.shp', current_time_str, True)
         self.created_json = self.make_full_json()
 
     def __call__(self, *args, **kwargs):
         return self.make_full_json()
 
+    # ToDo :
     def create_origin_dir(self):
         """
         Function cuts the folder path and slices the last 2 names as required.
         :return: last 2 folders from the given path as string.
         """
-        path_list = self.path.split('\\')[-2:]
-        str_origin_dir = str(path_list[0]) + r'/' + str(path_list[1])
+        if os.uname().sysname == 'Linux':
+            path_list = self.path.split('/')[-2:]
+            str_origin_dir = str(path_list[0]) + r'/' + str(path_list[1])
+        else:
+            path_list = self.path.split('\\')[-2:]
+            str_origin_dir = str(path_list[0]) + r'/' + str(path_list[1])
         return str_origin_dir
+
+    def add_ext_source_name(self, shape_file, ext, new_name=False):
+        """
+        will update shapefile source name
+        :param shape_file: original metadata shape file
+        :param ext: extension to original name
+        :param new_name: if True -> will set ext as entire name
+        :return: new rendered name [str]
+        """
+        shp_file = geopandas.read_file(shape_file)
+        if new_name:
+            source_new_name = ext
+        else:
+            source_new_name = "_".join([ext, shp_file.Source[0]])
+        # shp_file.Source[0] = source_new_name
+        shp_file.Source.update(source_new_name)
+        shp_file.to_file(shape_file, encoding='utf-8')
+
+        return source_new_name
 
     def make_full_json(self):
         """
@@ -71,7 +96,7 @@ class CreateJsonShape:
         decoded_data = data.decode()
         return decoded_data
 
-    def bounding_box(self, points):
+    def calculate_bounding_box(self, points):
         """
         The function calculates bounding_box from the coordinates. XY - Min , XY - Max
         :param points: coordinates list
@@ -133,7 +158,7 @@ class CreateJsonShape:
                                                        self.read_shapes['Product']['features'][0]['geometry'][
                                                            'coordinates'][0]]]},
                         'layerPolygonParts': self.read_shapes['ShapeMetadata']}
-            bbox_list = self.bounding_box(
+            bbox_list = self.calculate_bounding_box(
                 [list(x) for x in self.read_shapes['Product']['features'][0]['geometry']['coordinates'][0]])
             del metadata['layerPolygonParts']['features'][0]['id']
             bbox_to_append = []
@@ -144,18 +169,3 @@ class CreateJsonShape:
         except KeyError:
             raise Exception("Key not found in the ShapeMetadata")
         return metadata
-
-
-"""
-This is an example of creating json from shape file.
-"""
-if __name__ == '__main__':
-    c = CreateJsonShape(r'D:\example-shapefiles')  # Created with None
-    print(c.get_json_output())
-    try:
-        with open(Path(Path(__file__).resolve()).parent.parent / 'jsons/shape_file.json', 'w', encoding='utf-8') as f:
-            json.dump(json.loads(c.get_json_output()), f, ensure_ascii=False)
-    except IOError:
-        raise Exception("Cannot write json file")
-    schema_validator.validate_json_types(c.get_json_output())
-    # json_compare_pycsw()

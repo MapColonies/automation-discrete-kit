@@ -6,3 +6,4 @@ GDAL
 os
 json
 jsonschema
+mc-automation-tools

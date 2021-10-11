@@ -28,13 +28,17 @@ class CreateJsonShape:
         self.shapes_path = folder_path
         self.tiff_path = folder_path
         self.read_shapes = {}
-        if os.uname().sysname == 'Linux':
-            self.shapes_path += '/' + 'Shapes' + '/'
-        else:
-            self.shapes_path += '\\' + 'Shapes' + '\\'
+        # if os.uname().sysname == 'Linux':
+        #     self.shapes_path += '/'
+        # else:
+        #     self.shapes_path += '\\'
+        # if os.uname().sysname == 'Linux':
+        #     self.shapes_path += '/' + 'Shapes' + '/'
+        # else:
+        #     self.shapes_path += '\\' + 'Shapes' + '\\'
         files_names = ['Files', 'Product', 'ShapeMetadata']
         for name in files_names:
-            full_file_path = self.shapes_path + name
+            full_file_path = os.path.join(self.shapes_path, name)
             if config.validate_ext_files_exists(full_file_path):
                 self.read_shapes[name] = shape_to_geojson(full_file_path)
         current_time_str = config.generate_datatime_zulu().replace('-', '_').replace(':', '_')

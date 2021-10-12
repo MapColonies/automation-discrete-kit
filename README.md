@@ -5,7 +5,8 @@ This package provides multiple utilities for discrete manipulations and validati
 Include:
 ## Test suite include following tests:
 1. CreateJsonShape - creates JSON from read files to be compared later on.
-2. Config - contains file extensions , and useful function for the JSON creation.
+2. Change resource name in metadata shape file.
+3. Config - contains file extensions , and useful function for the JSON creation.
 
 ## Returns 
  * JSON - contains relevant fields filled with values.

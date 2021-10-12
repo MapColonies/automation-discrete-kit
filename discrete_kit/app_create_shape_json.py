@@ -8,10 +8,12 @@ _log = logging.getLogger('discrete_kit.app')
 This is an example of creating json from shape file.
 """
 if __name__ == '__main__':
-    c = [x[0] for x in os.walk(r'/home/dimitry/Downloads/2021-2686-0')]
+    path_to_check = r'/home/dimitry/Downloads/example-shps/3276'
+    c = [x[0] for x in os.walk(path_to_check)]
     shape_path = ("\n".join(s for s in c if 'Shape'.lower() in s.lower()))
     c = CreateJsonShape(shape_path)  # Created with None
-    # print(c.get_json_output())
+    #c.add_ext_source_name(path_to_check, ".shp", True)
+    print(c.get_json_output())
     try:
         with open(Path(Path(__file__).resolve()).parent / 'jsons/shape_file.json', 'w', encoding='utf-8') as f:
             json.dump(json.loads(c.get_json_output()), f, ensure_ascii=False)

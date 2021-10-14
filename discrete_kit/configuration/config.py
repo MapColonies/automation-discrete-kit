@@ -2,12 +2,30 @@ import enum
 import glob
 import os
 import datetime
+import logging
+from mc_automation_tools import common
+
+_log = logging.getLogger('discrete_kit.configuration.config')
 
 files_extension_list = ['.cpg', '.dbf', '.prj', '.shp', '.shx']
 
 METADATA_TYPE = 'RECORD_RASTER'
 JSON_NAME = "metadata_schema.json"
 SCHEMA_FOLDER = 'schema'
+
+PATH_TO_CHECK = r'/home/dimitry/Downloads/example-shps/3273'
+
+
+class OSName(enum.Enum):
+    LINUX = 'Linux'
+
+
+class ExtensionTypes(enum.Enum):
+    """
+    Types of environment.
+    """
+    SHAPE = '.shp'
+    TFW = '.tfw'
 
 
 class EnvironmentTypes(enum.Enum):
@@ -21,6 +39,7 @@ class EnvironmentTypes(enum.Enum):
 
 def validate_ext_files_exists(path):
     for ext in files_extension_list:
+        _log.info("Validating if extension : " + ext + " exists for : " + path)
         if not glob.glob(path + ext):
             raise Exception("Missing filename {0}{1}".format(path, ext))
     return True
@@ -28,11 +47,6 @@ def validate_ext_files_exists(path):
 
 def get_tiff_basename(path):
     return ''.join(os.path.basename(item) for item in (glob.glob(path + '//t*')))
-
-
-def get_folder_names(path):
-    # glob.glob(path + '/*/')
-    return
 
 
 def convert_time_to_utc(received_time):
@@ -55,3 +69,9 @@ def generate_datatime_zulu(current=True, time_dict=None):
         raise ValueError("Should provide current=True param or time dictionary value")
 
     return res
+
+
+def find_folder_in_path(path_to_search, folder_name):
+    c = [x[0] for x in os.walk(path_to_search)]
+    found_path = ("\n".join(s for s in c if folder_name.lower() in s.lower()))
+    return found_path

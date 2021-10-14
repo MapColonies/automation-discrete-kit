@@ -1,12 +1,13 @@
 import os
 import json
-
+import logging
 from jsonschema import *
 
 import discrete_kit
-
+_log = logging.getLogger('discrete_kit.validator.schema_validator')
 
 def validate_json_types(received_json=None):
+    _log.info("Starting valdiate Shape JSON")
     if received_json:
         if type(json.loads(received_json)) is dict:
             dir_name = os.path.dirname(__file__)

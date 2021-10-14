@@ -7,7 +7,7 @@ import discrete_kit
 _log = logging.getLogger('discrete_kit.validator.schema_validator')
 
 def validate_json_types(received_json=None):
-    _log.info("Starting valdiate Shape JSON")
+    _log.info("Starting validate Shape JSON")
     if received_json:
         if type(json.loads(received_json)) is dict:
             dir_name = os.path.dirname(__file__)
@@ -18,6 +18,7 @@ def validate_json_types(received_json=None):
                     schema = json.load(fp)
                     try:
                         validate(instance=json.loads(received_json), schema=schema)
+                        _log.info("End validate Shape JSON")
                     except ValidationError as e:
                         raise Exception(e.schema['error_msg'])
 

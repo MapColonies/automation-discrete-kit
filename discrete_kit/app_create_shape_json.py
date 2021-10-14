@@ -18,10 +18,11 @@ if __name__ == '__main__':
     # c.add_ext_source_name(path_to_check, ".shp", True)
     print(shape_json.get_json_output())
     try:
-        _log.info("Writing JSON to file")
+        _log.info("Start Writing JSON to file")
         with open(Path(Path(__file__).resolve()).parent / 'jsons/shape_file.json', 'w', encoding='utf-8') as f:
             json.dump(json.loads(shape_json.get_json_output()), f, ensure_ascii=False)
     except IOError:
         raise Exception("Cannot write json file")
+    _log.info("End Writing JSON to file")
     schema_validator.validate_json_types(shape_json.get_json_output())
     # json_compare_pycsw()

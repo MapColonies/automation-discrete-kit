@@ -15,14 +15,14 @@ def shape_to_geojson(path):
     :return: JSON string.
     """
     try:
-        _log.info("Start converting shape file to JSON")
+        _log.info("Start converting shape file to JSON for : " + path)
         shp_file = geopandas.read_file(path + config.ExtensionTypes.SHAPE.value)
         # shp_file = geopandas.read_file(path + '.shp')
         geo_json = shp_file._to_geo()
     except Exception as err:
         _log.error(str(err))
         raise Exception(str(err))
-    _log.info("End convert shape file to JSON")
+    _log.info("End convert shape file to JSON for : " + path)
     return geo_json
 
 

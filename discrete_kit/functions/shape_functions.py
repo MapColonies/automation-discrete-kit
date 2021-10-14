@@ -124,6 +124,7 @@ class ShapeToJSON:
         try:
             f = open(tfw_file)
         except IOError:
+            _log.error('Failed to load tfw on following path : ' + tfw_file)
             raise Exception('Failed to load tfw on following path : ' + tfw_file)
         else:
             with f:
@@ -141,6 +142,7 @@ class ShapeToJSON:
         try:
             shapes = self.read_shapes['Files']['features']
         except KeyError:
+            _log.error("Key not found in the Files")
             raise Exception("Key not found in the Files")
         for shape in shapes:
             filenames_list.append(
@@ -200,6 +202,7 @@ class ShapeToJSON:
                     bbox_to_append.append(tup_index)
             metadata['layerPolygonParts']['bbox'] = bbox_to_append
         except KeyError:
+            _log.error("Key not found in the ShapeMetadata")
             raise Exception("Key not found in the ShapeMetadata")
         if metadata['rms'] is None:
             metadata['rms'] = 'undefined'

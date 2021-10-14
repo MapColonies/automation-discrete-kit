@@ -41,6 +41,7 @@ def validate_ext_files_exists(path):
     for ext in files_extension_list:
         _log.info("Validating if extension : " + ext + " exists for : " + path)
         if not glob.glob(path + ext):
+            _log.error("Missing filename {0}{1}".format(path, ext))
             raise Exception("Missing filename {0}{1}".format(path, ext))
     return True
 
@@ -66,8 +67,8 @@ def generate_datatime_zulu(current=True, time_dict=None):
         res = datetime.datetime(time_dict['year'], time_dict['month'], time_dict['day'], time_dict['hour'],
                                 time_dict['minute'], time_dict['second']).strftime('%Y-%m-%dT%H:%M:%SZ')
     else:
+        _log.error("Should provide current=True param or time dictionary value")
         raise ValueError("Should provide current=True param or time dictionary value")
-
     return res
 
 

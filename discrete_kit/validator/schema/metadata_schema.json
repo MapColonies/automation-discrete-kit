@@ -18,6 +18,9 @@
         "productName": {
           "type": "string"
         },
+        "region": {
+          "type": "string"
+        },
         "description": {
           "type": "string"
         },
@@ -45,6 +48,12 @@
             "type": "string"
           }
         },
+        "rms": {
+          "type": "string"
+        },
+        "scale": {
+          "type": "string"
+        },
         "productId": {
           "type": "string"
         },
@@ -55,6 +64,9 @@
           "type": "string"
         },
         "resolution": {
+          "type": "string"
+        },
+        "maxResolutionMeter": {
           "type": "number"
         },
         "footprint": {
@@ -78,6 +90,12 @@
             }
           }
         },
+        "srsName": {
+          "type": "string"
+        },
+        "srsId": {
+          "type": "string"
+        },
         "layerPolygonParts": {
           "type": "object",
           "required": [],
@@ -91,9 +109,6 @@
                 "type": "object",
                 "required": [],
                 "properties": {
-                  "id": {
-                    "type": "string"
-                  },
                   "type": {
                     "type": "string"
                   },
@@ -101,6 +116,12 @@
                     "type": "object",
                     "required": [],
                     "properties": {
+                      "Cities": {
+                        "type": "string"
+                      },
+                      "Countries": {
+                        "type": "string"
+                      },
                       "Dsc": {
                         "type": "string"
                       },
@@ -153,8 +174,20 @@
                   }
                 }
               }
+            },
+            "bbox": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
             }
           }
+        },
+        "includedInBests": {
+          "type": "string"
+        },
+        "productBoundingBox": {
+          "type": "string"
         }
       }
     },

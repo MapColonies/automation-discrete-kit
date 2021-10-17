@@ -157,6 +157,10 @@ class ShapeToJSON:
         """
         _log.info("Start collecting metadata for the json")
         # ToDo : Add / Check creationDate, ingestionDate, updateDate, sourceDateStart, sourceDateEnd , Add New Cities + Countries
+        # ToDo : add  "includedInBests":"undefined",
+        #       "productBoundingBox":"undefined",  "srsId":"undefined",
+        #       "srsName":"undefined",producerName , classification
+
         ### self.read_shapes['ShapeMetadata']['features'][0]['properties']['Cities']
         ### self.read_shapes['ShapeMetadata']['features'][0]['properties']['Countries']
         try:
@@ -184,14 +188,18 @@ class ShapeToJSON:
                         'productVersion':
                             self.read_shapes['ShapeMetadata']['features'][0]['properties']['Source'].split('-')[1],
                         'productType': self.read_shapes['Product']['features'][0]['properties']['Type'],
-                        'resolution': float(self.load_resolution_from_tfw()),
+                        'resolution': format(float(self.load_resolution_from_tfw()), '.10f'),
                         'maxResolutionMeter': float(
                             self.read_shapes['Product']['features'][0]['properties']['Resolution']),
                         'footprint': {'type': self.read_shapes['Product']['features'][0]['geometry']['type'],
                                       'coordinates': [[list(x) for x in
                                                        self.read_shapes['Product']['features'][0]['geometry'][
                                                            'coordinates'][0]]]},
-                        'layerPolygonParts': self.read_shapes['ShapeMetadata']}
+                        'srsName': 'undefined',
+                        'srsId': 'undefined',
+                        'layerPolygonParts': self.read_shapes['ShapeMetadata'],
+                        'includedInBests': 'undefined',
+                        'productBoundingBox': 'undefined'}
             bbox_list = self.calculate_bounding_box(
                 [list(x) for x in self.read_shapes['Product']['features'][0]['geometry']['coordinates'][0]])
             _log.info("End calculating bounding box")

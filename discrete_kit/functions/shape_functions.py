@@ -156,10 +156,8 @@ class ShapeToJSON:
         :return: metadata JSON string.
         """
         _log.info("Start collecting metadata for the json")
-        # ToDo : Add / Check creationDate, ingestionDate, updateDate, sourceDateStart, sourceDateEnd , Add New Cities + Countries
-        # ToDo : add  "includedInBests":"undefined",
-        #       "productBoundingBox":"undefined",  "srsId":"undefined",
-        #       "srsName":"undefined",producerName , classification
+        # ToDo : Add / Check creationDate, ingestionDate, updateDate, sourceDateStart, sourceDateEnd
+        # ToDo : add  producerName , classification - how to calculate
 
         ### self.read_shapes['ShapeMetadata']['features'][0]['properties']['Cities']
         ### self.read_shapes['ShapeMetadata']['features'][0]['properties']['Countries']
@@ -167,6 +165,8 @@ class ShapeToJSON:
             metadata = {'type': config.METADATA_TYPE,
                         'productName': self.read_shapes['ShapeMetadata']['features'][0]['properties']['SourceName'],
                         'region': self.read_shapes['ShapeMetadata']['features'][0]['properties']['Countries'],
+                        'producerName': 'undefined',
+                        'classification': '9999999999999',
                         'description': self.read_shapes['ShapeMetadata']['features'][0]['properties']['Dsc'],
                         'creationDate': config.convert_time_to_utc(
                             self.read_shapes['ShapeMetadata']['features'][0]['properties']['UpdateDate']),

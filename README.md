@@ -3,10 +3,13 @@
 # Automation-discrete-kit
 This package provides multiple utilities for discrete manipulations and validation tools
 Include:
-## Test suite include following tests:
-1. CreateJsonShape - creates JSON from read files to be compared later on.
-2. Change resource name in metadata shape file.
+## Features included:
+1. ShapeToJSON - creates JSON from read files to be compared later on.
+2. Change resource name in shape file - metadata.
 3. Config - contains file extensions , and useful function for the JSON creation.
+4. Write JSON to file for validation.
+5. Validation of the JSON schema.
 
 ## Returns 
  * JSON - contains relevant fields filled with values.
+ * JSON File.

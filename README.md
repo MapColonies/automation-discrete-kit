@@ -15,7 +15,7 @@ This package provides multiple utilities for discrete manipulations , validation
 4. Write JSON to file for validation.
 5. Validation of the JSON schema.
 
-### Return options 
+### Return options:
  - JSON - contains relevant fields filled with values.
  - JSON File.
 

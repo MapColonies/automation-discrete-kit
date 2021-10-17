@@ -6,7 +6,7 @@
 This package provides multiple utilities for discrete manipulations , validation tools and functions.
 
 ### required files:
-- 'Shapes folder'
+- `Shapes folder`
 
 ### Features included:
 1. ShapeToJSON - creates JSON from read files to be compared later on.

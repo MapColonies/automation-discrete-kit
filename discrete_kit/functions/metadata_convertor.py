@@ -1,5 +1,4 @@
 """This module provide multiple function that convert data"""
-import glob
 import os
 
 
@@ -40,10 +39,13 @@ def replace_discrete_resolution(discrete_directory: str, new_val: str, ext: str=
     """
     # collect all relevant files
     list_of_files = []
+    results = []
     for root, subFolders, files in os.walk(discrete_directory):
         if files:
             list_of_files = list_of_files+[os.path.join(root,file) for file in files if file.endswith('.'+ext)]
 
     # update each file
     for file in list_of_files:
-        change_resolution_value(new_val, file)
+        results.append(change_resolution_value(new_val, file))
+
+    return results

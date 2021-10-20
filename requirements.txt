@@ -1,9 +1,5 @@
 setuptools~=50.3.2
 wheel
 geopandas
-Fiona
-GDAL
-os
-json
 jsonschema
 mc-automation-tools

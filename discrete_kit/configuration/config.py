@@ -7,6 +7,8 @@ from mc_automation_tools import common
 
 _log = logging.getLogger('discrete_kit.configuration.config')
 
+files_names = ['Files', 'Product', 'ShapeMetadata']
+
 files_extension_list = ['.cpg', '.dbf', '.prj', '.shp', '.shx']
 
 METADATA_TYPE = 'RECORD_RASTER'
@@ -38,6 +40,8 @@ class EnvironmentTypes(enum.Enum):
 
 
 def validate_ext_files_exists(path):
+    p_walker = [x[0] for x in os.walk(path)]
+    path = ("\n".join(s for s in p_walker if 'Shape'.lower() in s.lower()))
     for ext in files_extension_list:
         _log.info("Validating if extension : " + ext + " exists for : " + path)
         if not glob.glob(path + ext):

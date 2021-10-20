@@ -35,12 +35,12 @@ class ShapeToJSON:
         self.shapes_path = folder_path
         self.tiff_path = folder_path
         self.read_shapes = {}
-        files_names = ['Files', 'Product', 'ShapeMetadata']
-        for name in files_names:
+
+        for name in config.files_names:
             _log.info("Looping : " + name)
             full_file_path = os.path.join(self.shapes_path, name)
-            if config.validate_ext_files_exists(full_file_path):
-                self.read_shapes[name] = shape_to_geojson(full_file_path)
+            # if config.validate_ext_files_exists(full_file_path):
+            self.read_shapes[name] = shape_to_geojson(full_file_path)
         current_time_str = config.generate_datatime_zulu().replace('-', '_').replace(':', '_')
         # self.add_ext_source_name(full_file_path + '.shp', current_time_str, True)
         _log.info("End looping")

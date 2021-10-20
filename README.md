@@ -6,7 +6,7 @@
 This package provides multiple utilities for discrete manipulations , validation tools and functions.
 
 ### required files:
-- 'Shapes folder'
+- `Shapes folder`
 
 ### Features included:
 1. ShapeToJSON - creates JSON from read files to be compared later on.
@@ -15,7 +15,7 @@ This package provides multiple utilities for discrete manipulations , validation
 4. Write JSON to file for validation.
 5. Validation of the JSON schema.
 
-### Return options 
+### Return options:
  - JSON - contains relevant fields filled with values.
  - JSON File.
 

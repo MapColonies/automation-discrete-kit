@@ -1,5 +1,6 @@
 setuptools~=50.3.2
 wheel
 geopandas
+Fiona
 jsonschema
 mc-automation-tools

@@ -12,8 +12,8 @@ files_names = ['Files', 'Product', 'ShapeMetadata']
 files_extension_list = ['.cpg', '.dbf', '.prj', '.shp', '.shx']
 
 METADATA_TYPE = 'RECORD_RASTER'
-JSON_NAME = "metadata_schema.json"
-SCHEMA_FOLDER = 'schema'
+JSON_NAME = "validation_schema.json"
+SCHEMA_FOLDER = 'configuration'
 
 PATH_TO_CHECK = r'/home/dimitry/Downloads/example-shps/3273'
 
@@ -39,15 +39,13 @@ class EnvironmentTypes(enum.Enum):
     PROD = 3
 
 
-def validate_ext_files_exists(path):
-    p_walker = [x[0] for x in os.walk(path)]
-    path = ("\n".join(s for s in p_walker if 'Shape'.lower() in s.lower()))
-    for ext in files_extension_list:
-        _log.info("Validating if extension : " + ext + " exists for : " + path)
-        if not glob.glob(path + ext):
-            _log.error("Missing filename {0}{1}".format(path, ext))
-            raise Exception("Missing filename {0}{1}".format(path, ext))
-    return True
+def validate_ext_files_exists(path, ext):
+    _log.info("Validating if extension : " + ext + " exists for : " + path)
+    if not glob.glob(path + ext):
+        _log.error("Missing filename {0}{1}".format(path, ext))
+        return False, "{0}{1}".format(path, ext)
+        # raise Exception("Missing filename {0}{1}".format(path, ext))
+    return True, ""
 
 
 def get_tiff_basename(path):

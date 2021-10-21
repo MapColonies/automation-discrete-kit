@@ -29,8 +29,8 @@ def shape_to_geojson(path):
 class ShapeToJSON:
     def __init__(self, folder_path):
         _log.info("Start Shape to JSON class creation")
-        shape_json = [x[0] for x in os.walk(folder_path)]
-        folder_path = ("\n".join(s for s in shape_json if 'Shape'.lower() in s.lower()))
+        # shape_json = [x[0] for x in os.walk(folder_path)]
+        # folder_path = ("\n".join(s for s in shape_json if 'Shape'.lower() in s.lower()))
         self.path = folder_path
         self.shapes_path = folder_path
         self.tiff_path = folder_path

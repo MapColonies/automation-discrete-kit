@@ -14,12 +14,13 @@ def change_resolution_value(new_res_val: str, file: str, line_idx: int = 0) -> d
     try:
         fp = open(file, "r")
         temp_lines_list = fp.readlines()
-        temp_lines_list[line_idx] = new_res_val+'\n'
+        temp_lines_list[line_idx] = new_res_val + '\n'
         fp.close()
 
         fp = open(file, "w")
         fp.writelines(temp_lines_list)
         fp.close()
+        result["reason"] = f"Change resolution into on file {file} to value: [{new_res_val}]"
 
     except Exception as e:
         result["success"] = False
@@ -28,7 +29,7 @@ def change_resolution_value(new_res_val: str, file: str, line_idx: int = 0) -> d
     return result
 
 
-def replace_discrete_resolution(discrete_directory: str, new_val: str, ext: str= 'tfw') -> list:
+def replace_discrete_resolution(discrete_directory: str, new_val: str, ext: str = 'tfw') -> list:
     """
     This method get directory of discrete source data and replace and update max resolution parameter on all included
     files (as default - .tfw)
@@ -42,7 +43,7 @@ def replace_discrete_resolution(discrete_directory: str, new_val: str, ext: str=
     results = []
     for root, subFolders, files in os.walk(discrete_directory):
         if files:
-            list_of_files = list_of_files+[os.path.join(root,file) for file in files if file.endswith('.'+ext)]
+            list_of_files = list_of_files + [os.path.join(root, file) for file in files if file.endswith('.' + ext)]
 
     # update each file
     for file in list_of_files:

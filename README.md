@@ -14,6 +14,7 @@ This package provides multiple utilities for discrete manipulations , validation
 3. Config - contains file extensions , and useful function for the JSON creation.
 4. Write JSON to file for validation.
 5. Validation of the JSON schema.
+6. Updating tfw resolution value - TBD
 
 ### Return options:
  - JSON - contains relevant fields filled with values.

@@ -1,4 +1,6 @@
+import json
 from builtins import Exception
+
 
 #
 # def pycsw_compare(json_pycsw, json_created):
@@ -38,7 +40,109 @@ from builtins import Exception
 # def replace_json_nulls(rcv_json):
 #     rcv_json
 
-def validate_pycsw_with_shape_json(pycws_json, shape_json):
+def validate_pycsw_with_shape_json(pycws_json, shape_json, is_history=False):
+    missing_values = {}
+    error_flag = True
+    pycsw_history_json = pycws_json[0]
+    pycsw_original_json = pycws_json[1]
+    for dic in pycws_json:
+        if dic.get('mcraster:productType') == 'OrthophotoHistory':
+            pycsw_history_json = dic
+        else:
+            pycsw_original_json = dic
+    shape_json_metadata = shape_json['metadata']
+    if shape_json_metadata['productId']['value'] != pycsw_original_json['mcraster:productId']:
+        missing_values['productId'] = {'Expected: ' + shape_json_metadata['productId']['value'],
+                                       'Acutal: ' + pycsw_original_json['mcraster:productId']}
+
+    if shape_json_metadata['productName']['value'] != pycsw_original_json['mcraster:productName']:
+        missing_values['productName'] = {'Expected: ' + shape_json_metadata['productName']['value'],
+                                         'Acutal: ' + pycsw_original_json['mcraster:productName']}
+
+    if shape_json_metadata['productVersion']['value'] != pycsw_original_json['mcraster:productVersion']:
+        missing_values['productVersion'] = {'Expected: ' + shape_json_metadata['productVersion']['value'],
+                                            'Acutal: ' + pycsw_original_json['mcraster:productVersion']}
+
+    if shape_json_metadata['productType']['value'] != pycsw_original_json['mcraster:productType']:
+        missing_values['productType'] = {'Expected: ' + shape_json_metadata['productType']['value'],
+                                         'Acutal: ' + pycsw_original_json['mcraster:productVersion']}
+
+    if shape_json_metadata['description']['value'] != pycsw_original_json['mcraster:description']:
+        missing_values['description'] = {'Expected: ' + shape_json_metadata['description']['value'],
+                                         'Acutal: ' + pycsw_original_json['mcraster:description']}
+
+    if shape_json_metadata['resolution']['value'] != pycsw_original_json['mcraster:maxResolutionDeg']:
+        missing_values['resolution'] = {'Expected: ' + shape_json_metadata['resolution']['value'],
+                                        'Acutal: ' + pycsw_original_json['mcraster:maxResolutionDeg']}
+
+    # ToDo: Check Max Resolution
+    # if shape_json_metadata['resolution']['value'] != pycsw_original_json['mcraster:maxResolutionDeg']:
+    #     missing_values['resolution'] = {'Expected: ' + shape_json_metadata['resolution']['value'],
+    #                                      'Acutal: ' + pycsw_original_json['mcraster:maxResolutionDeg']}
+
+    if str(shape_json_metadata['accuracyCE90']) != pycsw_original_json['mcraster:minHorizontalAccuracyCE90']:
+        missing_values['Accuracy'] = {'Expected: ' + str(shape_json_metadata['accuracyCE90']),
+                                      'Acutal: ' + pycsw_original_json['mcraster:minHorizontalAccuracyCE90']}
+
+    if shape_json_metadata['sensorType']['value'] != pycsw_original_json['mcraster:sensors']:
+        missing_values['sensors'] = {'Expected: ' + shape_json_metadata['sensorType']['value'],
+                                     'Acutal: ' + pycsw_original_json['mcraster:sensors']}
+
+    if json.dumps(shape_json_metadata['footprint']) != pycsw_original_json['mcraster:footprint']:
+        missing_values['footprint'] = {'Expected: ' + json.dumps(shape_json_metadata['footprint']),
+                                       'Acutal: ' + pycsw_original_json['mcraster:footprint']}
+
+    if shape_json_metadata['region']['value'] != pycsw_original_json['mcraster:region']:
+        missing_values['region'] = {'Expected: ' + shape_json_metadata['sensorType']['value'],
+                                     'Acutal: ' + str(pycsw_original_json['mcraster:region'])}
+
+    # if shape_json_metadata['rms']['value'] != pycsw_original_json['mcraster:RMS']:
+    #     missing_values['rms'] = {'Expected: ' + shape_json_metadata['rms']['value'],
+    #                                  'Acutal: ' + pycsw_original_json['mcraster:RMS']}
+
+    # if shape_json_metadata['layerPolygonParts']['bbox'] != pycsw_original_json['mcraster:region']:
+    #     missing_values['region'] = {'Expected: ' + shape_json_metadata['sensorType']['value'],
+    #                                 'Acutal: ' + str(pycsw_original_json['mcraster:region'])}
+
+    return True, missing_values
+    #
+    # if is_history:
+    #     pass
+    # if pycws_json is None:
+    #     missing_values['PYCSW_JSON'] = 'Empty JSON'
+    #     return False, missing_values
+    # if shape_json is None:
+    #     missing_values['ShapeJSON'] = 'Empty JSON'
+    #     return False, missing_values
+
+    #
+    #
+    #
+    #
+    # try:
+    #     # ToDo: Added History Ortophoto JSON.
+    #     original_ortophoto_json = pycws_json['data']['search'][0]
+    #
+    # except KeyError:
+    #     missing_values['data']['search'] = {'Expected': 'JSON', 'Actual': 'Missing JSON'}
+    #     error_flag = False
+    #
+    # for o_k, o_v in original_ortophoto_json.items():
+    #     if o_k is not '__typename':
+    #         try:
+    #             if shape_json['metadata'][o_k] != o_v:
+    #                 missing_values[o_k] = {'Expected': str(o_v), 'Actual': str(shape_json['metadata'][o_k])}
+    #                 # missmatch_values[o_k] = 'Expected : ' + str(o_v) + ' , Actual : ' + str(shape_json['metadata'][o_k])
+    #         except KeyError:
+    #             missing_values[o_k] = {'Expected': str(o_v), 'Actual': 'Missing Key in PYCSW JSON'}
+    #             error_flag = False
+
+    # history_ortophoto_json = pycws_json['data']['search'][1]
+
+    return error_flag, missing_values
+
+
+def validate_pycsw_with_shape_json_old_version(pycws_json, shape_json):
     missing_values = {}
     error_flag = True
 

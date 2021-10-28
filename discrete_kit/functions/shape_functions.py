@@ -242,7 +242,7 @@ class ShapeToJSON:
                         'productType':
                             {
                                 'value': self.read_shapes['Product']['features'][0]['properties']['Type'],
-                                'path': 'ShapeMetadata.features[0].propertiesType'
+                                'path': 'Product.features[0].propertiesType'
                             },
 
                         'resolution': {

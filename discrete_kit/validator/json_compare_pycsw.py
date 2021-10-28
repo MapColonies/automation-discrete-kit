@@ -40,7 +40,7 @@ from builtins import Exception
 # def replace_json_nulls(rcv_json):
 #     rcv_json
 
-def validate_pycsw_with_shape_json(pycws_json, shape_json, is_history=False):
+def validate_pycsw_with_shape_json(pycws_json, shape_json):
     missing_values = {}
     error_flag = True
     pycsw_history_json = pycws_json[0]
@@ -103,14 +103,22 @@ def validate_pycsw_with_shape_json(pycws_json, shape_json, is_history=False):
     if shape_json_metadata['srsName']['value'] != pycsw_original_json['mcraster:SRSName']:
         missing_values['srsName'] = {'Expected: ' + shape_json_metadata['srsName']['value'],
                                      'Acutal: ' + str(pycsw_original_json['mcraster:SRSName'])}
-    # if shape_json_metadata['rms']['value'] != pycsw_original_json['mcraster:RMS']:
-    #     missing_values['rms'] = {'Expected: ' + shape_json_metadata['rms']['value'],
-    #                                  'Acutal: ' + pycsw_original_json['mcraster:RMS']}
 
-    # if shape_json_metadata['layerPolygonParts']['bbox'] != pycsw_original_json['mcraster:region']:
-    #     missing_values['region'] = {'Expected: ' + shape_json_metadata['sensorType']['value'],
-    #                                 'Acutal: ' + str(pycsw_original_json['mcraster:region'])}
-
+    for k, v in json.loads(pycsw_original_json['mcraster:layerPolygonParts']).items():
+        try:
+            if k == 'bbox':
+                if shape_json_metadata['layerPolygonParts']['bbox'] != v:
+                    missing_values[k] = {'Expected': str(v),
+                                         'Actual': str(shape_json_metadata['layerPolygonParts']['bbox'])}
+            elif shape_json_metadata['layerPolygonParts']['value'][k] != v:
+                missing_values[k] = {'Expected': str(v),
+                                     'Actual': str(shape_json_metadata['layerPolygonParts']['value'][k])}
+                # missmatch_values[o_k] = 'Expected : ' + str(o_v) + ' , Actual : ' + str(shape_json['metadata'][o_k])
+        except KeyError:
+            missing_values[k] = {'Expected': str(v), 'Actual': 'Missing Key in PYCSW JSON'}
+            error_flag = False
+    if len(missing_values) != 0:
+        error_flag = False
     return True, missing_values
     #
     # if is_history:

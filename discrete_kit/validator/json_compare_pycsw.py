@@ -51,60 +51,60 @@ def validate_pycsw_with_shape_json(pycws_json, shape_json):
         else:
             pycsw_original_json = dic
     shape_json_metadata = shape_json['metadata']
-    if shape_json_metadata['productId']['value'] != pycsw_original_json['mcraster:productId']:
+    if shape_json_metadata['productId']['value'] != pycsw_original_json['mc:productId']:
         missing_values['productId'] = {'Expected: ' + shape_json_metadata['productId']['value'],
-                                       'Acutal: ' + pycsw_original_json['mcraster:productId']}
+                                       'Acutal: ' + pycsw_original_json['mc:productId']}
 
-    if shape_json_metadata['productName']['value'] != pycsw_original_json['mcraster:productName']:
+    if shape_json_metadata['productName']['value'] != pycsw_original_json['mc:productName']:
         missing_values['productName'] = {'Expected: ' + shape_json_metadata['productName']['value'],
-                                         'Acutal: ' + pycsw_original_json['mcraster:productName']}
+                                         'Acutal: ' + pycsw_original_json['mc:productName']}
 
-    if shape_json_metadata['productVersion']['value'] != pycsw_original_json['mcraster:productVersion']:
+    if shape_json_metadata['productVersion']['value'] != pycsw_original_json['mc:productVersion']:
         missing_values['productVersion'] = {'Expected: ' + shape_json_metadata['productVersion']['value'],
-                                            'Acutal: ' + pycsw_original_json['mcraster:productVersion']}
+                                            'Acutal: ' + pycsw_original_json['mc:productVersion']}
 
-    if shape_json_metadata['productType']['value'] != pycsw_original_json['mcraster:productType']:
+    if shape_json_metadata['productType']['value'] != pycsw_original_json['mc:productType']:
         missing_values['productType'] = {'Expected: ' + shape_json_metadata['productType']['value'],
-                                         'Acutal: ' + pycsw_original_json['mcraster:productVersion']}
+                                         'Acutal: ' + pycsw_original_json['mc:productVersion']}
 
-    if shape_json_metadata['description']['value'] != pycsw_original_json['mcraster:description']:
+    if shape_json_metadata['description']['value'] != pycsw_original_json['mc:description']:
         missing_values['description'] = {'Expected: ' + shape_json_metadata['description']['value'],
-                                         'Acutal: ' + pycsw_original_json['mcraster:description']}
+                                         'Acutal: ' + pycsw_original_json['mc:description']}
 
-    if shape_json_metadata['resolution']['value'] != pycsw_original_json['mcraster:maxResolutionDeg']:
+    if shape_json_metadata['resolution']['value'] != pycsw_original_json['mc:maxResolutionDeg']:
         missing_values['resolution'] = {'Expected: ' + shape_json_metadata['resolution']['value'],
-                                        'Acutal: ' + pycsw_original_json['mcraster:maxResolutionDeg']}
+                                        'Acutal: ' + pycsw_original_json['mc:maxResolutionDeg']}
 
     # ToDo: Check Max Resolution
     # if shape_json_metadata['resolution']['value'] != pycsw_original_json['mcraster:maxResolutionDeg']:
     #     missing_values['resolution'] = {'Expected: ' + shape_json_metadata['resolution']['value'],
     #                                      'Acutal: ' + pycsw_original_json['mcraster:maxResolutionDeg']}
 
-    if str(shape_json_metadata['accuracyCE90']) != pycsw_original_json['mcraster:minHorizontalAccuracyCE90']:
+    if str(shape_json_metadata['accuracyCE90']) != pycsw_original_json['mc:minHorizontalAccuracyCE90']:
         missing_values['Accuracy'] = {'Expected: ' + str(shape_json_metadata['accuracyCE90']),
-                                      'Acutal: ' + pycsw_original_json['mcraster:minHorizontalAccuracyCE90']}
+                                      'Acutal: ' + pycsw_original_json['mc:minHorizontalAccuracyCE90']}
 
-    if shape_json_metadata['sensorType']['value'] != pycsw_original_json['mcraster:sensors']:
+    if shape_json_metadata['sensorType']['value'] != pycsw_original_json['mc:sensors']:
         missing_values['sensors'] = {'Expected: ' + shape_json_metadata['sensorType']['value'],
-                                     'Acutal: ' + pycsw_original_json['mcraster:sensors']}
+                                     'Acutal: ' + pycsw_original_json['mc:sensors']}
 
-    if json.dumps(shape_json_metadata['footprint']) != pycsw_original_json['mcraster:footprint']:
+    if json.dumps(shape_json_metadata['footprint']) != pycsw_original_json['mc:footprint']:
         missing_values['footprint'] = {'Expected: ' + json.dumps(shape_json_metadata['footprint']),
-                                       'Acutal: ' + pycsw_original_json['mcraster:footprint']}
+                                       'Acutal: ' + pycsw_original_json['mc:footprint']}
 
-    if shape_json_metadata['region']['value'] != pycsw_original_json['mcraster:region']:
+    if shape_json_metadata['region']['value'] != pycsw_original_json['mc:region']:
         missing_values['region'] = {'Expected: ' + shape_json_metadata['sensorType']['value'],
-                                    'Acutal: ' + str(pycsw_original_json['mcraster:region'])}
+                                    'Acutal: ' + str(pycsw_original_json['mc:region'])}
 
-    if shape_json_metadata['srsId']['value'] != pycsw_original_json['mcraster:SRS']:
+    if shape_json_metadata['srsId']['value'] != pycsw_original_json['mc:SRS']:
         missing_values['srsId'] = {'Expected: ' + shape_json_metadata['srsId']['value'],
-                                   'Acutal: ' + str(pycsw_original_json['mcraster:SRS'])}
+                                   'Acutal: ' + str(pycsw_original_json['mc:SRS'])}
 
-    if shape_json_metadata['srsName']['value'] != pycsw_original_json['mcraster:SRSName']:
+    if shape_json_metadata['srsName']['value'] != pycsw_original_json['mc:SRSName']:
         missing_values['srsName'] = {'Expected: ' + shape_json_metadata['srsName']['value'],
-                                     'Acutal: ' + str(pycsw_original_json['mcraster:SRSName'])}
+                                     'Acutal: ' + str(pycsw_original_json['mc:SRSName'])}
 
-    for k, v in json.loads(pycsw_original_json['mcraster:layerPolygonParts']).items():
+    for k, v in json.loads(pycsw_original_json['mc:layerPolygonParts']).items():
         try:
             if k == 'bbox':
                 if shape_json_metadata['layerPolygonParts']['bbox'] != v:

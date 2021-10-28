@@ -94,8 +94,15 @@ def validate_pycsw_with_shape_json(pycws_json, shape_json, is_history=False):
 
     if shape_json_metadata['region']['value'] != pycsw_original_json['mcraster:region']:
         missing_values['region'] = {'Expected: ' + shape_json_metadata['sensorType']['value'],
-                                     'Acutal: ' + str(pycsw_original_json['mcraster:region'])}
+                                    'Acutal: ' + str(pycsw_original_json['mcraster:region'])}
 
+    if shape_json_metadata['srsId']['value'] != pycsw_original_json['mcraster:SRS']:
+        missing_values['srsId'] = {'Expected: ' + shape_json_metadata['srsId']['value'],
+                                   'Acutal: ' + str(pycsw_original_json['mcraster:SRS'])}
+
+    if shape_json_metadata['srsName']['value'] != pycsw_original_json['mcraster:SRSName']:
+        missing_values['srsName'] = {'Expected: ' + shape_json_metadata['srsName']['value'],
+                                     'Acutal: ' + str(pycsw_original_json['mcraster:SRSName'])}
     # if shape_json_metadata['rms']['value'] != pycsw_original_json['mcraster:RMS']:
     #     missing_values['rms'] = {'Expected: ' + shape_json_metadata['rms']['value'],
     #                                  'Acutal: ' + pycsw_original_json['mcraster:RMS']}

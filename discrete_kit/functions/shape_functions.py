@@ -167,7 +167,8 @@ class ShapeToJSON:
             metadata = {'type': config.METADATA_TYPE,
 
                         'productName': {
-                            'value': self.read_shapes['ShapeMetadata']['features'][0]['properties']['SourceName'],
+                            'value': (self.read_shapes['ShapeMetadata']['features'][0]['properties'][
+                                'SourceName']).replace('_w84geo_Tiff', ''),
                             'path': 'ShapeMetadata.features[0].properties.SourceName'
                         },
 

@@ -16,13 +16,61 @@
           "type": "string"
         },
         "productName": {
-          "type": "string"
+          "type": "object",
+          "required": [],
+          "properties": {
+            "value": {
+              "type": "string"
+            },
+            "path": {
+              "type": "string"
+            }
+          }
         },
         "region": {
-          "type": "string"
+          "type": "object",
+          "required": [],
+          "properties": {
+            "value": {
+              "type": "string"
+            },
+            "path": {
+              "type": "string"
+            }
+          }
+        },
+        "producerName": {
+          "type": "object",
+          "required": [],
+          "properties": {
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        "classification": {
+          "type": "object",
+          "required": [],
+          "properties": {
+            "value": {
+              "type": "string"
+            },
+            "dependsOn": {
+              "type": "string"
+            }
+          }
         },
         "description": {
-          "type": "string"
+          "type": "object",
+          "required": [],
+          "properties": {
+            "value": {
+              "type": "string"
+            },
+            "path": {
+              "type": "string"
+            }
+          }
         },
         "creationDate": {
           "type": "string"
@@ -43,31 +91,100 @@
           "type": "number"
         },
         "sensorType": {
-          "type": "array",
-          "items": {
-            "type": "string"
+          "type": "object",
+          "required": [],
+          "properties": {
+            "value": {
+              "type": "string"
+            },
+            "path": {
+              "type": "string"
+            }
           }
         },
         "rms": {
-          "type": "string"
+          "type": "object",
+          "required": [],
+          "properties": {
+            "value": {
+              "type": "string"
+            },
+            "path": {
+              "type": "string"
+            }
+          }
         },
         "scale": {
-          "type": "string"
+          "type": "object",
+          "required": [],
+          "properties": {
+            "value": {
+              "type": "string"
+            },
+            "path": {
+              "type": "string"
+            }
+          }
         },
         "productId": {
-          "type": "string"
+          "type": "object",
+          "required": [],
+          "properties": {
+            "value": {
+              "type": "string"
+            },
+            "path": {
+              "type": "string"
+            }
+          }
         },
         "productVersion": {
-          "type": "string"
+          "type": "object",
+          "required": [],
+          "properties": {
+            "value": {
+              "type": "string"
+            },
+            "path": {
+              "type": "string"
+            }
+          }
         },
         "productType": {
-          "type": "string"
+          "type": "object",
+          "required": [],
+          "properties": {
+            "value": {
+              "type": "string"
+            },
+            "path": {
+              "type": "string"
+            }
+          }
         },
         "resolution": {
-          "type": "string"
+          "type": "object",
+          "required": [],
+          "properties": {
+            "value": {
+              "type": "string"
+            },
+            "path": {
+              "type": "string"
+            }
+          }
         },
         "maxResolutionMeter": {
-          "type": "number"
+          "type": "object",
+          "required": [],
+          "properties": {
+            "value": {
+              "type": "number"
+            },
+            "path": {
+              "type": "string"
+            }
+          }
         },
         "footprint": {
           "type": "object",
@@ -91,81 +208,99 @@
           }
         },
         "srsName": {
-          "type": "string"
+          "type": "object",
+          "required": [],
+          "properties": {
+            "value": {
+              "type": "string"
+            }
+          }
         },
         "srsId": {
-          "type": "string"
+          "type": "object",
+          "required": [],
+          "properties": {
+            "value": {
+              "type": "string"
+            }
+          }
         },
         "layerPolygonParts": {
           "type": "object",
           "required": [],
           "properties": {
-            "type": {
-              "type": "string"
-            },
-            "features": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "required": [],
-                "properties": {
-                  "type": {
-                    "type": "string"
-                  },
-                  "properties": {
-                    "type": "object",
-                    "required": [],
-                    "properties": {
-                      "Cities": {
-                        "type": "string"
-                      },
-                      "Countries": {
-                        "type": "string"
-                      },
-                      "Dsc": {
-                        "type": "string"
-                      },
-                      "Ep90": {
-                        "type": "string"
-                      },
-                      "Resolution": {
-                        "type": "string"
-                      },
-                      "Rms": {
-                        "type": "null"
-                      },
-                      "Scale": {
-                        "type": "null"
-                      },
-                      "SensorType": {
-                        "type": "string"
-                      },
-                      "Source": {
-                        "type": "string"
-                      },
-                      "SourceName": {
-                        "type": "string"
-                      },
-                      "UpdateDate": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "geometry": {
+            "value": {
+              "type": "object",
+              "required": [],
+              "properties": {
+                "type": {
+                  "type": "string"
+                },
+                "features": {
+                  "type": "array",
+                  "items": {
                     "type": "object",
                     "required": [],
                     "properties": {
                       "type": {
                         "type": "string"
                       },
-                      "coordinates": {
-                        "type": "array",
-                        "items": {
-                          "type": "array",
-                          "items": {
+                      "properties": {
+                        "type": "object",
+                        "required": [],
+                        "properties": {
+                          "Cities": {
+                            "type": "string"
+                          },
+                          "Countries": {
+                            "type": "string"
+                          },
+                          "Dsc": {
+                            "type": "string"
+                          },
+                          "Ep90": {
+                            "type": "string"
+                          },
+                          "Resolution": {
+                            "type": "string"
+                          },
+                          "Rms": {
+                            "type": null
+                          },
+                          "Scale": {
+                            "type": null
+                          },
+                          "SensorType": {
+                            "type": "string"
+                          },
+                          "Source": {
+                            "type": "string"
+                          },
+                          "SourceName": {
+                            "type": "string"
+                          },
+                          "UpdateDate": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "geometry": {
+                        "type": "object",
+                        "required": [],
+                        "properties": {
+                          "type": {
+                            "type": "string"
+                          },
+                          "coordinates": {
                             "type": "array",
                             "items": {
-                              "type": "number"
+                              "type": "array",
+                              "items": {
+                                "type": "array",
+                                "items": {
+                                  "type": "number"
+                                }
+                              }
                             }
                           }
                         }
@@ -174,6 +309,9 @@
                   }
                 }
               }
+            },
+            "path": {
+              "type": "string"
             },
             "bbox": {
               "type": "array",
@@ -184,10 +322,22 @@
           }
         },
         "includedInBests": {
-          "type": "string"
+          "type": "object",
+          "required": [],
+          "properties": {
+            "value": {
+              "type": "string"
+            }
+          }
         },
         "productBoundingBox": {
-          "type": "string"
+          "type": "object",
+          "required": [],
+          "properties": {
+            "value": {
+              "type": "string"
+            }
+          }
         }
       }
     },

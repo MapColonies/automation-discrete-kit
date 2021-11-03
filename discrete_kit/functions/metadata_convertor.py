@@ -20,7 +20,7 @@ def change_resolution_value(new_res_val: str, file: str, line_idx: int = 0) -> d
         fp = open(file, "w")
         fp.writelines(temp_lines_list)
         fp.close()
-        result["reason"] = f"Change resolution into on file {file} to value: [{new_res_val}]"
+        result["reason"] = f"Change resolution into file {file} to value: [{new_res_val}]"
 
     except Exception as e:
         result["success"] = False

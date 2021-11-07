@@ -46,7 +46,7 @@ def validate_pycsw_with_shape_json(pycws_json, shape_json):
     pycsw_history_json = pycws_json[0]
     pycsw_original_json = pycws_json[1]
     for dic in pycws_json:
-        if dic.get('mcraster:productType') == 'OrthophotoHistory':
+        if dic.get('mc:productType') == 'OrthophotoHistory':
             pycsw_history_json = dic
         else:
             pycsw_original_json = dic
@@ -83,7 +83,7 @@ def validate_pycsw_with_shape_json(pycws_json, shape_json):
     if str(shape_json_metadata['accuracyCE90']) != pycsw_original_json['mc:minHorizontalAccuracyCE90']:
         missing_values['Accuracy'] = {'Expected: ' + str(shape_json_metadata['accuracyCE90']),
                                       'Actual: ' + pycsw_original_json['mc:minHorizontalAccuracyCE90']}
-
+    # ToDo: Check if needed to test
     if shape_json_metadata['sensorType']['value'] != pycsw_original_json['mc:sensors']:
         missing_values['sensors'] = {'Expected: ' + shape_json_metadata['sensorType']['value'],
                                      'Actual: ' + pycsw_original_json['mc:sensors']}
@@ -93,7 +93,7 @@ def validate_pycsw_with_shape_json(pycws_json, shape_json):
                                        'Actual: ' + pycsw_original_json['mc:footprint']}
 
     if shape_json_metadata['region']['value'] != pycsw_original_json['mc:region']:
-        missing_values['region'] = {'Expected: ' + shape_json_metadata['sensorType']['value'],
+        missing_values['region'] = {'Expected: ' + shape_json_metadata['region']['value'],
                                     'Actual: ' + str(pycsw_original_json['mc:region'])}
 
     if shape_json_metadata['srsId']['value'] != pycsw_original_json['mc:SRS']:
@@ -104,22 +104,38 @@ def validate_pycsw_with_shape_json(pycws_json, shape_json):
         missing_values['srsName'] = {'Expected: ' + shape_json_metadata['srsName']['value'],
                                      'Actual: ' + str(pycsw_original_json['mc:SRSName'])}
 
+    if shape_json_metadata['type'] != pycsw_original_json['mc:type']:
+        missing_values['type'] = {'Expected: ' + shape_json_metadata['type'],
+                                  'Actual: ' + str(pycsw_original_json['mc:type'])}
+
+    if shape_json_metadata['maxResolutionMeter']['value'] != pycsw_original_json['mc:maxResolutionMeter']:
+        missing_values['maxResolutionMeter'] = {'Expected: ' + str(shape_json_metadata['maxResolutionMeter']['value']),
+                                                'Actual: ' + str(pycsw_original_json['mc:maxResolutionMeter'])}
+
+    if str(shape_json_metadata['layerPolygonParts']['bbox']).replace('[', '').replace(']', '').replace(' ', '') != \
+            pycsw_original_json['mc:productBBox']:
+        missing_values['productBBox'] = {
+            'Expected: ' + (str(shape_json_metadata['layerPolygonParts']['bbox']).replace('[', '').replace(']',
+                                                                                                           '').replace(
+                ' ', '')),
+            'Actual: ' + str(pycsw_original_json['mc:productBBox'])}
+
     for k, v in json.loads(pycsw_original_json['mc:layerPolygonParts']).items():
         try:
             if k == 'bbox':
                 if shape_json_metadata['layerPolygonParts']['bbox'] != v:
-                    missing_values[k] = {'Expected': str(v),
-                                         'Actual': str(shape_json_metadata['layerPolygonParts']['bbox'])}
+                    missing_values[k] = {'Expected': str(shape_json_metadata['layerPolygonParts']['bbox']),
+                                         'Actual': str(v)}
             elif shape_json_metadata['layerPolygonParts']['value'][k] != v:
-                missing_values[k] = {'Expected': str(v),
-                                     'Actual': str(shape_json_metadata['layerPolygonParts']['value'][k])}
+                missing_values[k] = {'Expected': str(shape_json_metadata['layerPolygonParts']['value'][k]),
+                                     'Actual': str(v)}
                 # missmatch_values[o_k] = 'Expected : ' + str(o_v) + ' , Actual : ' + str(shape_json['metadata'][o_k])
         except KeyError:
             missing_values[k] = {'Expected': str(v), 'Actual': 'Missing Key in PYCSW JSON'}
             error_flag = False
     if len(missing_values) != 0:
         error_flag = False
-    return True, missing_values
+    return error_flag, missing_values
     #
     # if is_history:
     #     pass

@@ -104,6 +104,10 @@ def validate_pycsw_with_shape_json(pycws_json, shape_json):
         missing_values['srsName'] = {'Expected: ' + shape_json_metadata['srsName']['value'],
                                      'Actual: ' + str(pycsw_original_json['mc:SRSName'])}
 
+    if shape_json_metadata['ingestionDate'] != pycsw_original_json['mc:ingestionDate']:
+        missing_values['ingestionDate'] = {'Expected: ' + shape_json_metadata['ingestionDate'],
+                                           'Actual: ' + str(pycsw_original_json['mc:ingestionDate'])}
+
     if shape_json_metadata['type'] != pycsw_original_json['mc:type']:
         missing_values['type'] = {'Expected: ' + shape_json_metadata['type'],
                                   'Actual: ' + str(pycsw_original_json['mc:type'])}
@@ -111,6 +115,10 @@ def validate_pycsw_with_shape_json(pycws_json, shape_json):
     if shape_json_metadata['maxResolutionMeter']['value'] != pycsw_original_json['mc:maxResolutionMeter']:
         missing_values['maxResolutionMeter'] = {'Expected: ' + str(shape_json_metadata['maxResolutionMeter']['value']),
                                                 'Actual: ' + str(pycsw_original_json['mc:maxResolutionMeter'])}
+
+    if shape_json_metadata['producerName']['value'] != pycsw_original_json['mc:producerName']:
+        missing_values['producerName'] = {'Expected: ' + str(shape_json_metadata['producerName']['value']),
+                                          'Actual: ' + str(pycsw_original_json['mc:producerName'])}
 
     if str(shape_json_metadata['layerPolygonParts']['bbox']).replace('[', '').replace(']', '').replace(' ', '') != \
             pycsw_original_json['mc:productBBox']:

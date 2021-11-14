@@ -54,7 +54,7 @@ def get_tiff_basename(path):
 
 def convert_time_to_utc(received_time):
     return datetime.datetime.strptime(received_time,
-                                      '%d/%m/%Y').strftime('%Y-%d-%mT%H:%M:%S.%f')[:-3] + 'Z'
+                                      '%d/%m/%Y').strftime('%Y-%d-%mT%H:%M:%S.%f')[:-7] + 'Z'
 
 
 def generate_datatime_zulu(current=True, time_dict=None):

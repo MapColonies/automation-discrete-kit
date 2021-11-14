@@ -11,10 +11,13 @@ This package provides multiple utilities for discrete manipulations , validation
 ### Features included:
 1. ShapeToJSON - creates JSON from read files to be compared later on.
 2. Change resource name in shape file - metadata.
-3. Config - contains file extensions , and useful function for the JSON creation.
-4. Write JSON to file for validation.
-5. Validation of the JSON schema.
-6. Updating tfw resolution value - TBD
+3. Change discrete resolution
+4. JSONs validation
+5. Config - contains file extensions , and useful function for the JSON creation.
+6. Write JSON to file for validation.
+7. Validation of the JSON schema.
+8. Types Validations
+9. Updating tfw resolution value - TBD
 
 ### Return options:
  - JSON - contains relevant fields filled with values.

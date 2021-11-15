@@ -7,9 +7,11 @@ import glob
 
 _log = logging.getLogger('discrete_kit.shape_functions')
 
+
 # ToDo : After bug fixed need to calculate the classification
 def calculate_classification(resoultion):
     return ""
+
 
 def shape_to_geojson(path):
     """
@@ -255,8 +257,8 @@ class ShapeToJSON:
 
                         'maxResolutionMeter': {
                             'value': float(
-                                self.read_shapes['Product']['features'][0]['properties']['Resolution']),
-                            'path': 'Product.features[0].properties.Resolution'
+                                self.read_shapes['ShapeMetadata']['features'][0]['properties']['Resolution']),
+                            'path': 'ShapeMetadata.features[0].properties.Resolution'
                         },
 
                         'footprint': {'type': self.read_shapes['Product']['features'][0]['geometry']['type'],

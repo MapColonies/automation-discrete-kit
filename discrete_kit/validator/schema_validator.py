@@ -1,9 +1,6 @@
-import os
 import json
 import logging
 from jsonschema import *
-
-import discrete_kit
 
 _log = logging.getLogger('discrete_kit.validator.schema_validator')
 

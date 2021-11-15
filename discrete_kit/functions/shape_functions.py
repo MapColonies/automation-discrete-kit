@@ -7,6 +7,9 @@ import glob
 
 _log = logging.getLogger('discrete_kit.shape_functions')
 
+# ToDo : After bug fixed need to calculate the classification
+def calculate_classification(resoultion):
+    return ""
 
 def shape_to_geojson(path):
     """
@@ -159,7 +162,7 @@ class ShapeToJSON:
         """
         _log.info("Start collecting metadata for the json")
         # ToDo : Add / Check creationDate, ingestionDate, updateDate, sourceDateStart, sourceDateEnd
-        # ToDo : add  producerName , classification - how to calculate
+        # ToDo :  classification - how to calculate
 
         ### self.read_shapes['ShapeMetadata']['features'][0]['properties']['Cities']
         ### self.read_shapes['ShapeMetadata']['features'][0]['properties']['Countries']

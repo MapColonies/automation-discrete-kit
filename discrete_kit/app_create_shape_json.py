@@ -10,7 +10,6 @@ This is an example of creating json from shape file.
 """
 
 if __name__ == '__main__':
-
     # path_to_check = sys.argv[1] #ToDo : Added from CMD ?
     # shape_json = [x[0] for x in os.walk(config.PATH_TO_CHECK)]
     # shape_path = ("\n".join(s for s in shape_json if 'Shape'.lower() in s.lower()))

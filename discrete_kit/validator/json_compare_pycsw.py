@@ -107,13 +107,13 @@ def validate_pycsw_with_shape_json(pycws_json, shape_json):
         missing_values['layerPolygonParts.geometry.type'] = {
             'Expected': shapefile_layer_polygon_parts_json['geometry']['type'],
             'Actual': str(pycsw_layer_polygon_parts_json['geometry']['type'])}
-
-    if shapefile_layer_polygon_parts_json['geometry']['coordinates'] != pycsw_layer_polygon_parts_json['geometry'][
-        'coordinates']:
-        missing_values['layerPolygonParts.geometry.coordinates'] = {
-            'Expected': str(shapefile_layer_polygon_parts_json['geometry']['coordinates']),
-            'Actual': str(pycsw_layer_polygon_parts_json['geometry']['coordinates']).replace('[', '(').replace(']',
-                                                                                                               ')')}
+    #
+    # if shapefile_layer_polygon_parts_json['geometry']['coordinates'] != pycsw_layer_polygon_parts_json['geometry'][
+    #     'coordinates']:
+    #     missing_values['layerPolygonParts.geometry.coordinates'] = {
+    #         'Expected': str(shapefile_layer_polygon_parts_json['geometry']['coordinates']),
+    #         'Actual': str(pycsw_layer_polygon_parts_json['geometry']['coordinates']).replace('[', '(').replace(']',
+    #                                                                                                            ')')}
 
     if shapefile_layer_polygon_parts_json['properties']['Dsc'] != pycsw_layer_polygon_parts_json['properties']['Dsc']:
         missing_values['layerPolygonParts.properties.Dsc'] = {

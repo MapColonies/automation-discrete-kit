@@ -15,7 +15,7 @@ METADATA_TYPE = 'RECORD_RASTER'
 JSON_NAME = "validation_schema.json"
 SCHEMA_FOLDER = 'configuration'
 
-PATH_TO_CHECK = r'/home/dimitry/Downloads/example-shps/3273/2021-2683-0/Shapes'
+PATH_TO_CHECK = r'/home/dimitry/Downloads/tt/3273(1)/3273/2021-2683-0/Shapes'
 
 
 class OSName(enum.Enum):

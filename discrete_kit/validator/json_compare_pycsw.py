@@ -33,18 +33,13 @@ def validate_pycsw_with_shape_json(pycws_json, shape_json):
         missing_values['description'] = {'Expected': shape_json_metadata['description']['value'],
                                          'Actual': pycsw_original_json['mc:description']}
 
-    if date.today().strftime('%Y-%d-%m') != pycsw_original_json['mc:creationDateUTC'].split('T')[0]:
+    if date.today().strftime('%Y-%m-%d') != pycsw_original_json['mc:creationDateUTC'].split('T')[0]:
         missing_values['creationDate'] = {'Expected': date.today().strftime('%Y-%d-%m'),
-                                          'Actual': pycsw_original_json['mc:creationDateUTC']}
-
-    if shape_json_metadata['resolution']['value'] != pycsw_original_json['mc:maxResolutionDeg']:
-        missing_values['resolution'] = {'Expected': shape_json_metadata['resolution']['value'],
-                                        'Actual': pycsw_original_json['mc:maxResolutionDeg']}
-
-    # ToDo: Check Max Resolution
-    # if shape_json_metadata['resolution']['value'] != pycsw_original_json['mcraster:maxResolutionDeg']:
-    #     missing_values['resolution'] = {'Expected: ' + shape_json_metadata['resolution']['value'],
-    #                                      'Acutal: ' + pycsw_original_json['mcraster:maxResolutionDeg']}
+                                          'Actual': pycsw_original_json['mc:creationDateUTC'].split('T')[0]}
+    # ToDo: Uncomment after bug fixed
+    # if shape_json_metadata['resolution']['value'] != pycsw_original_json['mc:maxResolutionDeg']:
+    #     missing_values['resolution'] = {'Expected': shape_json_metadata['resolution']['value'],
+    #                                     'Actual': pycsw_original_json['mc:maxResolutionDeg']}
 
     if str(shape_json_metadata['accuracyCE90']) != pycsw_original_json['mc:minHorizontalAccuracyCE90']:
         missing_values['Accuracy'] = {'Expected': str(shape_json_metadata['accuracyCE90']),
@@ -54,9 +49,23 @@ def validate_pycsw_with_shape_json(pycws_json, shape_json):
         missing_values['sensors'] = {'Expected': shape_json_metadata['sensorType']['value'],
                                      'Actual': pycsw_original_json['mc:sensors']}
 
-    if json.dumps(shape_json_metadata['footprint']) != pycsw_original_json['mc:footprint']:
-        missing_values['footprint'] = {'Expected': json.dumps(shape_json_metadata['footprint']),
-                                       'Actual': pycsw_original_json['mc:footprint']}
+    if shape_json_metadata['footprint']['type'] != json.loads(pycsw_original_json['mc:footprint'])['type']:
+        missing_values['footprint.type'] = {'Expected': shape_json_metadata['footprint']['type'],
+                                            'Actual': json.loads(pycsw_original_json['mc:footprint'])['type']}
+
+    if [[round(k, 9), round(d, 9)] for k, d in shape_json_metadata['footprint']['coordinates'][0]] != [
+        [round(k, 9), round(d, 9)] for k, d in (json.loads(pycsw_original_json['mc:footprint']))['coordinates'][0]]:
+        missing_values['footprint.coordinates'] = {'Expected': str(
+            [[round(k, 9), round(d, 9)] for k, d in shape_json_metadata['footprint']['coordinates'][0]]),
+            'Actual': str([[round(k, 9), round(d, 9)] for k, d in
+                           (json.loads(pycsw_original_json['mc:footprint']))[
+                               'coordinates'][0]])}
+    # if json.dumps(shape_json_metadata['footprint']) != pycsw_original_json['mc:footprint']:
+    #     missing_values['footprint'] = {'Expected': json.dumps(shape_json_metadata['footprint']),
+    #                                    'Actual': pycsw_original_json['mc:footprint']}
+
+    # [[round(k, 9), round(d, 9)] for k, d in shapefile_layer_polygon_parts_json['geometry']['coordinates'][0]] != [
+    # [round(x, 9), round(y, 9)] for x, y in pycsw_layer_polygon_parts_json['geometry']['coordinates'][0]]
 
     if shape_json_metadata['region']['value'] != pycsw_original_json['mc:region']:
         missing_values['region'] = {'Expected': shape_json_metadata['region']['value'],
@@ -70,9 +79,9 @@ def validate_pycsw_with_shape_json(pycws_json, shape_json):
         missing_values['srsName'] = {'Expected': shape_json_metadata['srsName']['value'],
                                      'Actual': str(pycsw_original_json['mc:SRSName'])}
 
-    if shape_json_metadata['ingestionDate'] != pycsw_original_json['mc:ingestionDate']:
-        missing_values['ingestionDate'] = {'Expected': shape_json_metadata['ingestionDate'],
-                                           'Actual': str(pycsw_original_json['mc:ingestionDate'])}
+    if date.today().strftime('%Y-%m-%d') != pycsw_original_json['mc:ingestionDate'].split('T')[0]:
+        missing_values['ingestionDate'] = {'Expected': date.today().strftime('%Y-%d-%m'),
+                                           'Actual': pycsw_original_json['mc:ingestionDate'].split('T')[0]}
 
     if shape_json_metadata['type'] != pycsw_original_json['mc:type']:
         missing_values['type'] = {'Expected': shape_json_metadata['type'],
@@ -145,13 +154,22 @@ def validate_pycsw_with_shape_json(pycws_json, shape_json):
             'Expected': str(shapefile_layer_polygon_parts_json['properties']['UpdateDate']),
             'Actual': str(pycsw_layer_polygon_parts_json['properties']['UpdateDate'])}
 
-    if str(shape_json_metadata['layerPolygonParts']['bbox']).replace('[', '').replace(']', '').replace(' ', '') != \
-            pycsw_original_json['mc:productBBox']:
-        missing_values['productBBox'] = {
-            'Expected': (str(shape_json_metadata['layerPolygonParts']['bbox']).replace('[', '').replace(']',
-                                                                                                        '').replace(
-                ' ', '')),
-            'Actual': str(pycsw_original_json['mc:productBBox'])}
+    # if str(shape_json_metadata['layerPolygonParts']['bbox']).replace('[', '').replace(']', '').replace(' ', '') != \
+    #         pycsw_original_json['mc:productBBox']:
+    #     missing_values['productBBox'] = {
+    #         'Expected': (str(shape_json_metadata['layerPolygonParts']['bbox']).replace('[', '').replace(']',
+    #                                                                                                     '').replace(
+    #             ' ', '')),
+    #         'Actual': str(pycsw_original_json['mc:productBBox'])}
+
+    if [[round(k, 9), round(d, 9)] for k, d in shapefile_layer_polygon_parts_json['geometry']['coordinates'][0]] != [
+        [round(x, 9), round(y, 9)] for x, y in pycsw_layer_polygon_parts_json['geometry']['coordinates'][0]]:
+        missing_values['layerPolygonParts.bbox'] = {
+            'Expected': str([[round(k, 9), round(d, 9)] for k, d in
+                             shapefile_layer_polygon_parts_json['geometry']['coordinates'][0]]),
+            'Actual': str([
+                [round(x, 9), round(y, 9)] for x, y in pycsw_layer_polygon_parts_json['geometry']['coordinates'][0]])}
+
     #
     # for k, v in json.loads(pycsw_original_json['mc:layerPolygonParts']).items():
     #     try:

@@ -1,4 +1,5 @@
 import json
+from datetime import date
 
 
 def validate_pycsw_with_shape_json(pycws_json, shape_json):
@@ -31,6 +32,10 @@ def validate_pycsw_with_shape_json(pycws_json, shape_json):
     if shape_json_metadata['description']['value'] != pycsw_original_json['mc:description']:
         missing_values['description'] = {'Expected': shape_json_metadata['description']['value'],
                                          'Actual': pycsw_original_json['mc:description']}
+
+    if date.today().strftime('%Y-%d-%m') != pycsw_original_json['mc:creationDate'].split('T')[0]:
+        missing_values['creationDate'] = {'Expected': date.today().strftime('%Y-%d-%m'),
+                                          'Actual': pycsw_original_json['mc:creationDate']}
 
     if shape_json_metadata['resolution']['value'] != pycsw_original_json['mc:maxResolutionDeg']:
         missing_values['resolution'] = {'Expected': shape_json_metadata['resolution']['value'],

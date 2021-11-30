@@ -299,9 +299,9 @@ class ShapeToJSON:
                 for tup_index in index:
                     bbox_to_append.append(tup_index)
             metadata['layerPolygonParts']['bbox'] = bbox_to_append
-        except KeyError:
-            _log.error("Key not found in the ShapeMetadata")
-            raise Exception("Key not found in the ShapeMetadata")
+        except KeyError as e:
+            _log.error("Key not found in the ShapeMetadata : " + str(e))
+            raise Exception("Key not found in the ShapeMetadata" + str(e))
         if metadata['rms']['value'] is None:
             metadata['rms']['value'] = 'undefined'
         if metadata['scale']['value'] is None:

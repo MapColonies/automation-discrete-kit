@@ -2,7 +2,7 @@ import json
 from datetime import date
 
 
-def validate_pycsw_with_shape_json(pycws_json, shape_json):
+def validate_pycsw_with_shape_json(pycws_json, shape_json, sync_flag=False):
     missing_values = {}
     error_flag = True
     pycsw_history_json = pycws_json[0]
@@ -12,6 +12,8 @@ def validate_pycsw_with_shape_json(pycws_json, shape_json):
             pycsw_history_json = dic
         else:
             pycsw_original_json = dic
+    if sync_flag:
+        pycsw_original_json = pycsw_history_json
     shape_json_metadata = shape_json['metadata']
     if shape_json_metadata['productId']['value'] != pycsw_original_json['mc:productId']:
         missing_values['productId'] = {'Expected': shape_json_metadata['productId']['value'],
@@ -27,7 +29,7 @@ def validate_pycsw_with_shape_json(pycws_json, shape_json):
 
     if shape_json_metadata['productType']['value'] != pycsw_original_json['mc:productType']:
         missing_values['productType'] = {'Expected': shape_json_metadata['productType']['value'],
-                                         'Actual': pycsw_original_json['mc:productVersion']}
+                                         'Actual': pycsw_original_json['mc:productType']}
 
     if shape_json_metadata['description']['value'] != pycsw_original_json['mc:description']:
         missing_values['description'] = {'Expected': shape_json_metadata['description']['value'],

@@ -2,6 +2,7 @@ from pathlib import Path
 from discrete_kit.validator import schema_validator
 from discrete_kit.functions.shape_functions import *
 import sys
+import json
 
 _log = logging.getLogger('discrete_kit.app')
 
@@ -13,7 +14,15 @@ if __name__ == '__main__':
     # path_to_check = sys.argv[1] #ToDo : Added from CMD ?
     # shape_json = [x[0] for x in os.walk(config.PATH_TO_CHECK)]
     # shape_path = ("\n".join(s for s in shape_json if 'Shape'.lower() in s.lower()))
-    shape_json = ShapeToJSON(config.PATH_TO_CHECK)  # Created with None
+    json_folder_path = '/home/dimitry/Downloads/toc_sample.json'
+    with open(json_folder_path, 'r') as f:
+        rec_json = json.load(f)
+
+        s = ShapeToJSON().create_metadata_from_toc(rec_json)
+        with open('/tmp/ronens.json', 'w', encoding='utf-8') as ff:
+            json.dump(s, ff, ensure_ascii=True)
+        print(s)
+    # shape_json = ShapeToJSON(config.PATH_TO_CHECK)  # Created with None
     # c.add_ext_source_name(path_to_check, ".shp", True)
     # print(shape_json.get_json_output())
     # try:

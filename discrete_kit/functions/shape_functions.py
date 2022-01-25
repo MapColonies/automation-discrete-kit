@@ -437,3 +437,4 @@ class ShapeToJSON:
             metadata['scale']['value'] = 'undefined'
         _log.info("End collecting metadata for the json")
         return metadata
+

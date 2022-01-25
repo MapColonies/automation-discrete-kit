@@ -34,10 +34,10 @@ def validate_pycsw_with_shape_json(pycws_json, shape_json, sync_flag=False):
     if shape_json_metadata['description']['value'] != pycsw_original_json['mc:description']:
         missing_values['description'] = {'Expected': shape_json_metadata['description']['value'],
                                          'Actual': pycsw_original_json['mc:description']}
-
-    if date.today().strftime('%Y-%m-%d') != pycsw_original_json['mc:creationDateUTC'].split('T')[0]:
-        missing_values['creationDate'] = {'Expected': date.today().strftime('%Y-%d-%m'),
-                                          'Actual': pycsw_original_json['mc:creationDateUTC'].split('T')[0]}
+    #
+    # if date.today().strftime('%Y-%m-%d') != pycsw_original_json['mc:creationDateUTC'].split('T')[0]:
+    #     missing_values['creationDate'] = {'Expected': date.today().strftime('%Y-%d-%m'),
+    #                                       'Actual': pycsw_original_json['mc:creationDateUTC'].split('T')[0]}
     # ToDo: Uncomment after bug fixed
     # if shape_json_metadata['resolution']['value'] != pycsw_original_json['mc:maxResolutionDeg']:
     #     missing_values['resolution'] = {'Expected': shape_json_metadata['resolution']['value'],

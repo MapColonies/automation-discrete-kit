@@ -91,9 +91,9 @@ def validate_pycsw_with_shape_json(pycws_json, shape_json, sync_flag=False):
         missing_values['srsName'] = {'Expected': shape_json_metadata['srsName']['value'],
                                      'Actual': str(pycsw_original_json['mc:SRSName'])}
 
-    if date.today().strftime('%Y-%m-%d') != pycsw_original_json['mc:ingestionDate'].split('T')[0]:
-        missing_values['ingestionDate'] = {'Expected': date.today().strftime('%Y-%d-%m'),
-                                           'Actual': pycsw_original_json['mc:ingestionDate'].split('T')[0]}
+    # if date.today().strftime('%Y-%m-%d') != pycsw_original_json['mc:ingestionDate'].split('T')[0]:
+    #     missing_values['ingestionDate'] = {'Expected': date.today().strftime('%Y-%d-%m'),
+    #                                        'Actual': pycsw_original_json['mc:ingestionDate'].split('T')[0]}
 
     if shape_json_metadata['type'] != pycsw_original_json['mc:type']:
         missing_values['type'] = {'Expected': shape_json_metadata['type'],

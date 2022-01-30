@@ -55,13 +55,23 @@ def validate_pycsw_with_shape_json(pycws_json, shape_json, sync_flag=False):
         missing_values['footprint.type'] = {'Expected': shape_json_metadata['footprint']['type'],
                                             'Actual': json.loads(pycsw_original_json['mc:footprint'])['type']}
 
-    if [[round(k, 9), round(d, 9)] for k, d in shape_json_metadata['footprint']['coordinates'][0]] != [
-        [round(k, 9), round(d, 9)] for k, d in (json.loads(pycsw_original_json['mc:footprint']))['coordinates'][0]]:
-        missing_values['footprint.coordinates'] = {'Expected': str(
-            [[round(k, 9), round(d, 9)] for k, d in shape_json_metadata['footprint']['coordinates'][0]]),
-            'Actual': str([[round(k, 9), round(d, 9)] for k, d in
-                           (json.loads(pycsw_original_json['mc:footprint']))[
-                               'coordinates'][0]])}
+    if shape_json_metadata['footprint']['type'] == 'MultiPolygon':
+        if [[round(k, 9), round(d, 9)] for k, d in shape_json_metadata['footprint']['coordinates'][0][0]] != [
+            [round(k, 9), round(d, 9)] for k, d in
+            (json.loads(pycsw_original_json['mc:footprint']))['coordinates'][0][0]]:
+            missing_values['footprint.coordinates'] = {'Expected': str(
+                [[round(k, 9), round(d, 9)] for k, d in shape_json_metadata['footprint']['coordinates'][0][0]]),
+                'Actual': str([[round(k, 9), round(d, 9)] for k, d in
+                               (json.loads(pycsw_original_json['mc:footprint']))[
+                                   'coordinates'][0][0]])}
+    else:
+        if [[round(k, 9), round(d, 9)] for k, d in shape_json_metadata['footprint']['coordinates'][0]] != [
+            [round(k, 9), round(d, 9)] for k, d in (json.loads(pycsw_original_json['mc:footprint']))['coordinates'][0]]:
+            missing_values['footprint.coordinates'] = {'Expected': str(
+                [[round(k, 9), round(d, 9)] for k, d in shape_json_metadata['footprint']['coordinates'][0]]),
+                'Actual': str([[round(k, 9), round(d, 9)] for k, d in
+                               (json.loads(pycsw_original_json['mc:footprint']))[
+                                   'coordinates'][0]])}
     # if json.dumps(shape_json_metadata['footprint']) != pycsw_original_json['mc:footprint']:
     #     missing_values['footprint'] = {'Expected': json.dumps(shape_json_metadata['footprint']),
     #                                    'Actual': pycsw_original_json['mc:footprint']}

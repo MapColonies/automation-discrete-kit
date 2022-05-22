@@ -5,6 +5,7 @@ from datetime import date
 def validate_pycsw_with_shape_json(pycws_json, shape_json, sync_flag=False):
     missing_values = {}
     error_flag = True
+
     pycsw_history_json = pycws_json[0]
     pycsw_original_json = pycsw_history_json
     for dic in pycws_json:
